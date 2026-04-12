@@ -49,7 +49,7 @@ app.use(cookieParser());
 // }));
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://vidayana.nsjbgroups.com" // ✅ FULL URL
+  "https://vidayanta.nsjbgroups.com" // ✅ FULL URL
 ];
 app.use(cors({
   origin: function (origin, callback) {
