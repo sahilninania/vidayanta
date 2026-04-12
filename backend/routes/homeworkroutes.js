@@ -1,0 +1,12 @@
+import express from "express";
+import { emailLimiter } from "../middlerwars/ratelimter.js";
+import { createHomework , getHomeworkByClass ,getHomeworkByTeacher,getMyHomework,deleteHomework,updateHomework,getStudentHomework} from "../controllers/homeworkcontroller.js";
+const router = express.Router();
+router.post("/create", emailLimiter,createHomework);
+router.get("/class", getHomeworkByClass);
+router.get("/teacher", getHomeworkByTeacher);
+router.get("/my", getMyHomework);
+router.delete("/delete/:id", deleteHomework);
+router.put("/update/:id",emailLimiter, updateHomework);
+router.get("/student", getStudentHomework);
+export default router;
