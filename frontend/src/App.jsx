@@ -18,7 +18,7 @@ import AddClass from "./pages/class";
 import TeacherDashboard from "./pages/teacherdashboard"
 import  AddStudent from "./pages/createstudent";
 import ViewTeachers from "./pages/viewteacher";
-import ClassPage from "./pages/institutionstudentClass";
+import InstitutionClasses from "./pages/insitutionclasses";
 import ClassStudents from "./pages/insitutionstudent";
 import Attendance from "./pages/insitutionattandence";
 import ClassAttendance from "./pages/institutionclassattandence";
