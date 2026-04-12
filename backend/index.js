@@ -40,12 +40,28 @@ app.use(cookieParser());
 //   methods: ["GET", "POST", "PUT", "DELETE"],
 //   credentials: true
 // }));
-app.use(cors({
-  // origin: "http://localhost:5173",
-  origin:"vidayanta.nsjbgroups.com",
+// app.use(cors({
+//   // origin: "http://localhost:5173",
+//   origin:"https://vidayana.nsjbgroups.com",
 
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // 🔥 ADD OPTIONS
+// }));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://vidayana.nsjbgroups.com" // ✅ FULL URL
+];
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS blocked: " + origin));
+    }
+  },
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // 🔥 ADD OPTIONS
 }));
 // app.get("/",(req,res)=>{
 //   res.send("backend running ")})
