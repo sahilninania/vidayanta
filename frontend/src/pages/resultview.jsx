@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
@@ -16,7 +16,7 @@ export default function ResultView() {
     const fetchResults = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/result/student?studentId=${student._id}`
+          `${API_URL}//api/result/student?studentId=${student._id}`
         );
 
         const grouped = res.data.data.reduce((acc, test) => {

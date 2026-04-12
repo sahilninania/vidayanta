@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbarhome";
 import Footer from "../components/footerhome";
@@ -38,7 +38,7 @@ export default function FeedbackPage() {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:5000/api/feedback/create", form);
+      await axios.post(`${API_URL}/api/feedback/create`, form);
 
       alert("Feedback Submitted ✅");
 

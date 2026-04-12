@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ export default function TeacherDashboard() {
   // 🔥 stable fetch function
   const fetchData = useCallback(async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/teacher/dashboard?teacherId=${teacherId}`);
+      const res = await axios.get(`${API_URL}/api/teacher/dashboard?teacherId=${teacherId}`);
       setData(res.data.data);
     } catch (err) {
       console.log(err);

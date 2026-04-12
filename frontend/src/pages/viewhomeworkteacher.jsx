@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ correct import
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ export default function ViewHomeworkTeacher() {
         const teacherId = localStorage.getItem("teacherId");
 
         const res = await axios.get(
-          `http://localhost:5000/api/homework/my?teacherId=${teacherId}`
+          `${API_URL}/api/homework/my?teacherId=${teacherId}`
         );
 
         setHomework(res.data.data);
@@ -35,7 +35,7 @@ export default function ViewHomeworkTeacher() {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/homework/delete/${id}`
+        `${API_URL}/api/homework/delete/${id}`
       );
 
       setHomework(prev => prev.filter(hw => hw._id !== id));

@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import StudentLayout from "../layout/studentdashboardlayout";
 import axios from "axios";
-
+import API_URL from "../config/api.js";
 export default function StudentHomework() {
 
   // ✅ STATE (object because backend grouped data bhej raha hai)
@@ -17,7 +17,7 @@ export default function StudentHomework() {
         if (!studentId) return;
 
         const res = await axios.get(
-          `http://localhost:5000/api/homework/student?studentId=${studentId}`
+          `${API_URL}/api/homework/student?studentId=${studentId}`
         );
 
         // ✅ direct set (no array check)

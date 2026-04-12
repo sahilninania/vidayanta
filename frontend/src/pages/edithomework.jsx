@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-// import API from "../config/api.js";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ export default function EditHomework() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/homework/update/${hw._id}`,
+        `${API_URL}/api/homework/update/${hw._id}`,
         form
       );
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import StudentLayout from "../layout/studentdashboardlayout";
 import axios from "axios";
 
@@ -14,7 +14,7 @@ export default function StudentAttendance() {
         const studentId = localStorage.getItem("studentId");
 
         const res = await axios.get(
-          `http://localhost:5000/api/attendance/student?studentId=${studentId}`
+          `${API_URL}/api/attendance/student?studentId=${studentId}`
         );
 
         setData(res.data.records || []);

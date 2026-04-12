@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useParams, useNavigate } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
@@ -21,7 +21,7 @@ export default function EditAnnouncement() {
     if (!id) return;
     const fetch = async () => {
       const res = await axios.get(
-        `http://localhost:5000/api/announcement/${id}`
+        `${API_URL}/api/announcement/${id}`
       );
 
       setForm({
@@ -38,7 +38,7 @@ export default function EditAnnouncement() {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5000/api/announcement/${id}`,
+        `${API_URL}/api/announcement/${id}`,
         {
           ...form,
           userId

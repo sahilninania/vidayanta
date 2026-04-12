@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -31,7 +31,7 @@ export default function EditStudent() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/student/${state._id}`,
+        `${API_URL}/api/student/${state._id}`,
         form
       );
 

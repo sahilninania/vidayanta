@@ -1,7 +1,7 @@
 import Navbar from "../components/navbarhome";
 import Footer from "../components/footerhome";
 import { useState, useCallback } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -35,7 +35,7 @@ export default function Contact() {
         return alert("Required fields missing ❌");
       }
 
-      await axios.post("http://localhost:5000/api/contact/send", form);
+      await axios.post(`${API_URL}/api/contact/send`, form);
 
       alert("Message Sent ✅");
 

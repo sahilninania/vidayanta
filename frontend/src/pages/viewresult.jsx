@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
+import API_URL from "../config/api.js";
 
 export default function ViewResult() {
   const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ export default function ViewResult() {
       if (!teacherId) return;
 
       const res = await axios.get(
-        `http://localhost:5000/api/result/my?teacherId=${teacherId}`
+        `${API_URL}/api/result/my?teacherId=${teacherId}`
       );
 
       const results = res?.data?.data || [];
@@ -60,7 +61,7 @@ export default function ViewResult() {
     if (!window.confirm("Delete this result?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/result/${id}`);
+      await axios.delete(`${API_URL}/api/result/${id}`);
 
       setFiltered((prev) => prev.filter((r) => r._id !== id));
       setData((prev) => prev.filter((r) => r._id !== id));

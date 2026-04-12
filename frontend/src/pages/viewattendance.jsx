@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ export default function ViewAttendance() {
       if (!teacherId) return;
 
       const res = await axios.get(
-        `http://localhost:5000/api/attendance/my?teacherId=${teacherId}`
+        `${API_URL}/api/attendance/my?teacherId=${teacherId}`
       );
 
       setData(res?.data?.data || []);
@@ -37,7 +37,7 @@ export default function ViewAttendance() {
     if (!window.confirm("Delete this attendance?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/attendance/delete/${id}`);
+      await axios.delete(`${API_URL}/api/attendance/delete/${id}`);
 
       setData((prev) => prev.filter((item) => item._id !== id));
     } catch (error) {

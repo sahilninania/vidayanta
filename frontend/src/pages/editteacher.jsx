@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
+import API_URL from "../config/api.js";
 import axios from "axios";
 
 export default function EditTeacher() {
@@ -31,7 +32,7 @@ export default function EditTeacher() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/teachers/${state._id}`,
+        `${API_URL}/api/teachers/${state._id}`,
         {
           ...form,
           subjects: form.subjects.split(",").map(s => s.trim())

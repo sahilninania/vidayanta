@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import Superadminlayout from "../layout/superadmindashboardlayout";
 import axios from "axios";
 
@@ -22,7 +22,7 @@ export default function EditInstitution() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/superadmin/institution/${id}`
+          `${API_URL}/api/superadmin/institution/${id}`
         );
 
         const data = res.data?.data;
@@ -55,7 +55,7 @@ export default function EditInstitution() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/superadmin/institution/${id}`,
+        `${API_URL}/api/superadmin/institution/${id}`,
         form
       );
 

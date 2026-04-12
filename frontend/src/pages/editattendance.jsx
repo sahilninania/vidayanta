@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -30,7 +30,7 @@ export default function EditAttendance() {
     e.preventDefault();
 
     await axios.put(
-      `http://localhost:5000/api/attendance/update/${att._id}`,
+      `${API_URL}/api/attendance/update/${att._id}`,
       { records }
     );
 

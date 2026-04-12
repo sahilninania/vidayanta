@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
 
@@ -14,7 +14,7 @@ export default function ViewClasses() {
       const institutionCode = localStorage.getItem("institutionCode");
       if (!institutionCode) return;
 
-      const res = await axios.post("http://localhost:5000/api/classes/by-institution", {
+      const res = await axios.post(`${API_URL}/api/classes/by-institution`, {
         institutionCode,
       });
 
@@ -37,7 +37,7 @@ export default function ViewClasses() {
     if (!window.confirm("Delete this class?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/classes/${id}`);
+      await axios.delete(`${API_URL}/api/classes/${id}`);
 
       setClasses((prev) => prev.filter((c) => c._id !== id));
     } catch (error) {

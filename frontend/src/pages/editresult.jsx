@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -43,7 +43,7 @@ export default function EditResult() {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:5000/api/result/${state._id}`, {
+      await axios.put(`${API_URL}/api/result/${state._id}`, {
         ...state,
         maxMarks,
         results

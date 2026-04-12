@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ export default function CreateAnnouncement() {
 
   useEffect(() => {
     axios.get(
-      `http://localhost:5000/api/classes/institution-classes?institutionCode=${institutionCode}`
+      `${API_URL}/api/classes/institution-classes?institutionCode=${institutionCode}`
     ).then(res => setClasses(res.data.data));
   }, []);
 
@@ -49,12 +49,12 @@ export default function CreateAnnouncement() {
     }));
 
     const tRes = await axios.get(
-      `http://localhost:5000/api/teachers/by-class?className=${cls}&section=${sec}&institutionCode=${institutionCode}`
+      `${API_URL}/api/teachers/by-class?className=${cls}&section=${sec}&institutionCode=${institutionCode}`
     );
     setTeachers(tRes.data.data);
 
     const sRes = await axios.get(
-      `http://localhost:5000/api/classes/students-by-class?className=${cls}&section=${sec}&institutionCode=${institutionCode}`
+      `${API_URL}/api/classes/students-by-class?className=${cls}&section=${sec}&institutionCode=${institutionCode}`
     );
     setStudents(sRes.data.data);
   };
@@ -68,7 +68,7 @@ export default function CreateAnnouncement() {
         return;
       }
 
-      await axios.post("http://localhost:5000/api/announcement/create", {
+      await axios.post(`${API_URL}/api/announcement/create `, {
         ...form,
         institutionCode,
         userId

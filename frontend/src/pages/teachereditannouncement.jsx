@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
+import API_URL from "../config/api.js";
 
 export default function TeacherEditAnnouncement() {
 
@@ -35,7 +36,7 @@ export default function TeacherEditAnnouncement() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/announcement/${state._id}`,
+        `${API_URL}/api/announcement/${state._id}`,
         {
           ...form,
           userId: teacherId

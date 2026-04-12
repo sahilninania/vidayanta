@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-//import API from "../config/api.js";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -17,7 +17,7 @@ export default function UploadAttendance() {
   // 🔥 fetch students (stable function)
   const fetchData = useCallback(async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/attendance/students", {
+      const res = await axios.post(`${API_URL}/api/attendance/students`, {
         teacherId,
         institutionCode
       });
@@ -72,7 +72,7 @@ export default function UploadAttendance() {
   const handleSubmit = useCallback(async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/attendance/create", {
+      await axios.post(`${API_URL}/api/attendance/create`, {
         teacherId,
         institutionCode,
         className,

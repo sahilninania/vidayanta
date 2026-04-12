@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
-
+import API_URL from "../config/api.js";
 export default function StudentFullResult() {
   const [data, setData] = useState([]);
   const { id: studentId } = useParams(); // ✅ correct id
@@ -13,7 +13,7 @@ export default function StudentFullResult() {
         if (!studentId) return;
 
         const res = await axios.get(
-          `http://localhost:5000/api/result/student?studentId=${studentId}`
+          `${API_URL}/api/result/student?studentId=${studentId}`
         );
 
         setData(res?.data?.data || []);

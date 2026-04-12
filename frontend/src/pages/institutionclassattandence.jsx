@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useParams } from "react-router-dom";
 
 export default function ClassAttendance() {
@@ -17,7 +17,7 @@ export default function ClassAttendance() {
     const fetchAttendance = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/students/attendance/${id}?month=${month}`
+          `${API_URL}/api/students/attendance/${id}?month=${month}`
         );
 
         setStudents(res.data.data || []);
@@ -32,7 +32,7 @@ export default function ClassAttendance() {
 
   const mark = async (studentId, status) => {
     try {
-      await axios.post("/api/students/attendance", {
+      await axios.post(`${API_URL}/api/students/attendance`, {
         studentId,
         date: new Date().toISOString().slice(0, 10),
         status
@@ -40,7 +40,7 @@ export default function ClassAttendance() {
 
       // refresh data
       const res = await axios.get(
-        `http://localhost:5000/api/students/attendance/${id}?month=${month}`
+        `${API_URL}/api/students/attendance/${id}?month=${month}`
       );
       setStudents(res.data.data || []);
 

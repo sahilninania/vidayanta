@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StudentLayout from "../layout/studentdashboardlayout";
 import axios from "axios";
+import API_URL from "../config/api.js";
 
 export default function StudentDashboard() {
   const [data, setData] = useState(null);
@@ -11,7 +12,7 @@ export default function StudentDashboard() {
         const studentId = localStorage.getItem("studentId");
 
         const res = await axios.get(
-          `http://localhost:5000/api/student/dashboard/${studentId}`
+          `${API_URL}/api/student/dashboard/${studentId}`
         );
 
         setData(res.data.data);

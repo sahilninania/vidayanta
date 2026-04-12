@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -24,7 +24,7 @@ export default function EditClass() {
     const fetchData = async () => {
       try {
         // ✅ GET CLASS
-        const res = await axios.get(`http://localhost:5000/api/classes/${id}`);
+        const res = await axios.get(`${API_URL}/api/classes/${id}`);
         const data = res.data.data || {};
 
         setForm({
@@ -43,7 +43,7 @@ export default function EditClass() {
         if (!code) return;
 
         const t = await axios.get(
-          `http://localhost:5000/api/teachers/by-institution?institutionCode=${code}`
+          `${API_URL}/api/teachers/by-institution?institutionCode=${code}`
         );
 
         setTeachers(t.data.teachers || []);
@@ -67,7 +67,7 @@ export default function EditClass() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/classes/${id}`, form);
+      await axios.put(`${API_URL}/api/classes/${id}`, form);
 
       alert("Updated ✅");
       navigate("/institution/class");

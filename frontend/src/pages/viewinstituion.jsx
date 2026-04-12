@@ -3,6 +3,7 @@ import Sidebar from "../components/superadminsidebar";
 import Header from "../components/superadminheader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../config/api.js";
 
 export default function ViewInstitutions() {
   const [institutions, setInstitutions] = useState([]);
@@ -14,7 +15,7 @@ export default function ViewInstitutions() {
   const fetchInstitutions = useCallback(async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/superadmin/institutions"
+        `${API_URL}/api/superadmin/institutions`
       );
       setInstitutions(res?.data?.data || []);
     } catch (error) {
@@ -33,7 +34,7 @@ export default function ViewInstitutions() {
       const token = localStorage.getItem("token");
 
       const res = await axios.put(
-        `http://localhost:5000/api/superadmin/institution/${id}/toggle`,
+        `${API_URL}/api/superadmin/institution/${id}/toggle`,
         {},
         {
           headers: {
@@ -60,7 +61,7 @@ export default function ViewInstitutions() {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/superadmin/institution/${id}`
+        `${API_URL}/api/superadmin/institution/${id}`
       );
 
       setInstitutions((prev) =>

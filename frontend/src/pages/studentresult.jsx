@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import StudentLayout from "../layout/studentdashboardlayout";
 import axios from "axios";
-
+import API_URL from "../config/api.js";
 // ✅ TABLE COMPONENT (NO "NO DATA" INSIDE)
 const Table = ({ list, title }) => (
   <div className="mb-8">
@@ -56,7 +56,7 @@ export default function StudentResult() {
         if (!studentId) return;
 
         const res = await axios.get(
-          `http://localhost:5000/api/result/student?studentId=${studentId}`
+          `${API_URL}/api/result/student?studentId=${studentId}`
         );
 
         setData(res?.data?.data || []);

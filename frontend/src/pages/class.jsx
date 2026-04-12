@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
 
@@ -23,7 +23,7 @@ export default function AddClass() {
     const fetchTeachers = async () => {
       try {
         const res = await axios.get(
-       `http://localhost:5000/api/teachers/by-institution?institutionCode=${localStorage.getItem("institutionCode")}`,
+       `${API_URL}/api/teachers/by-institution?institutionCode=${localStorage.getItem("institutionCode")}`,
           { withCredentials: true }
         );
 
@@ -49,7 +49,7 @@ export default function AddClass() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/classes/add-class",
+        `${API_URL}/api/classes/add-class`,
         data,
         { withCredentials: true }
       );

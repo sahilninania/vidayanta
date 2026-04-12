@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -15,7 +15,7 @@ export default function AssignClass() {
       try {
         setLoading(true);
       const res = await axios.post(
-        "http://localhost:5000/api/classes/by-institution",
+        `${API_URL}/api/classes/by-institution`,
         { institutionCode }
       );
       setClasses(res.data.classes);

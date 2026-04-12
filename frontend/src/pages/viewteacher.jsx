@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
 
@@ -20,7 +20,7 @@ export default function ViewTeacher() {
       }
 
       const res = await axios.get(
-        `http://localhost:5000/api/teachers/by-institution?institutionCode=${institutionCode}`
+        `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
       );
 
       setTeachers(res.data.teachers);
@@ -42,7 +42,7 @@ export default function ViewTeacher() {
     if (!window.confirm("Delete this teacher?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/teachers/${id}`);
+      await axios.delete(`${API_URL}/api/teachers/${id}`);
 
       // instant UI update
       setTeachers((prev) => prev.filter((t) => t._id !== id));

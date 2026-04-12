@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API_URL from "../config/api.js";
 import axios from "axios";
 import Superadminlayout from "../layout/superadmindashboardlayout";
 
@@ -33,11 +34,11 @@ export default function Analytics() {
   const fetchData = async () => {
     try {
       const res1 = await axios.get(
-        `http://localhost:5000/api/superadmin/analytics?type=${type}`
+        `${API_URL}/api/superadmin/analytics?type=${type}`
       );
 
       const res2 = await axios.get(
-        `http://localhost:5000/api/superadmin/institutions`
+        `${API_URL}/api/superadmin/institutions`
       );
 
       setAnalytics(res1?.data?.data?.institutions || []);

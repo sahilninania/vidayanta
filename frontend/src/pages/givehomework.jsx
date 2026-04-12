@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -20,7 +20,7 @@ export default function GiveHomework() {
         const teacherId = localStorage.getItem("teacherId");
 
         const res = await axios.post(
-          "http://localhost:5000/api/classes/teacher-classes",
+          `${API_URL}/api/classes/teacher-classes`,
           { teacherId }
         );
 
@@ -78,7 +78,7 @@ export default function GiveHomework() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/homework/create", {
+      await axios.post(`${API_URL}/api/homework/create`, {
         className,
         section,
         subject,

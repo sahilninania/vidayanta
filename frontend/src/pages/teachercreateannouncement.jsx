@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
@@ -22,7 +22,7 @@ export default function TeacherCreateAnnouncement() {
   // 🔥 fetch classes optimized
   const fetchClasses = useCallback(async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/classes/teacher-classes", { teacherId });
+      const res = await axios.post(`${API_URL}/api/classes/teacher-classes`, { teacherId });
       setClasses(res.data.data || []);
     } catch (err) {
       console.log(err);
@@ -61,7 +61,7 @@ export default function TeacherCreateAnnouncement() {
         return;
       }
 
-      await axios.post("http://localhost:5000/api/announcement/create", {
+      await axios.post(`${API_URL}/api/announcement/create`, {
         title: form.title,
         message: form.message,
         targetType: "class",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,7 +16,7 @@ export default function Announcements() {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/announcement/get`,
+        `${API_URL}/api/announcement/get`,
         {
           params: {
             role: "instituteadmin",
@@ -45,7 +45,7 @@ export default function Announcements() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/announcement/${id}`,
+        `${API_URL}/api/announcement/${id}`,
         {
           params: { userId }
         }

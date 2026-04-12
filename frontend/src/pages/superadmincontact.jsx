@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import SuperAdminLayout from "../layout/superadmindashboardlayout";
 import axios from "axios";
-
+import API_URL from "../config/api.js";
 export default function ViewContacts() {
 
   const [data, setData] = useState([]);
@@ -9,7 +9,7 @@ export default function ViewContacts() {
   // 🔥 fetch contacts
   const fetchContacts = useCallback(async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/contact/contacts");
+      const res = await axios.get(`${API_URL}/api/contact/contacts`);
       setData(res?.data?.data || []);
     } catch (err) {
       console.log(err);
@@ -27,7 +27,7 @@ export default function ViewContacts() {
   // 🔥 delete contact
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/contact/${id}`);
+      await axios.delete(`${API_URL}/api/contact/${id}`);
       setData((prev) => prev.filter((item) => item._id !== id));
     } catch (err) {
       console.log(err);

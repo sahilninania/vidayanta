@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useParams } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
@@ -22,7 +22,7 @@ export default function AssignTeacher() {
   useEffect(() => {
     const fetchTeachers = async () => {
       const res = await axios.get(
-        `http://localhost:5000/api/teachers/by-institution?institutionCode=${institutionCode}`
+        `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
       );
 
       setTeachers(res.data.teachers);
@@ -64,7 +64,7 @@ export default function AssignTeacher() {
       return;
     }
 
-    await axios.post("http://localhost:5000/api/classes/assign", {
+    await axios.post(`${API_URL}/api/classes/assign`, {
       classId: id,
       teacherId: form.teacherId,
       subject: form.subject

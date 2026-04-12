@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import StudentLayout from "../layout/studentdashboardlayout";
 import axios from "axios";
 
@@ -19,7 +19,7 @@ export default function StudentAnnouncement() {
               localStorage.getItem("section")
             );
         const res = await axios.get(
-          `http://localhost:5000/api/announcement/get?role=student&institutionCode=${institutionCode}&className=${className}&section=${section}`
+          `${API_URL}/api/announcement/get?role=student&institutionCode=${institutionCode}&className=${className}&section=${section}`
         );
         console.log("ANNOUNCEMENTS 👉", data);
         if (isMounted) {

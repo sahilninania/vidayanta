@@ -1,6 +1,6 @@
 import { useState } from "react";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
@@ -41,7 +41,7 @@ export default function CreateTeacher() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/teachers/create",
+        `${API_URL}/api/teachers/create`,
         {
           ...form,
           subjects: form.subjects.split(",").map((s) => s.trim()),

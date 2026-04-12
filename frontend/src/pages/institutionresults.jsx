@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useNavigate } from "react-router-dom";
 
 export default function Results() {
@@ -10,7 +10,7 @@ export default function Results() {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/classes");
+        const res = await axios.get(`${API_URL}/api/classes`);
         setClasses(res.data.data || []);
       } catch (error) {
         console.error("Fetch classes error 👉", error);

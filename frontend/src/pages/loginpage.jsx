@@ -1,7 +1,7 @@
 import Navbar from "../components/navbarhome";
 import Footer from "../components/footerhome";
 import { useState, useCallback } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
@@ -32,7 +32,7 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+       `${API_URL}/api/auth/login`,
         form,
         { withCredentials: true }
       );

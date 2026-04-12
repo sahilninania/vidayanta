@@ -2,7 +2,7 @@ import Navbar from "../components/navbarhome";
 import Footer from "../components/footerhome";
 import { useState, useCallback } from "react";
 import axios from "axios";
-//import API from "../config/api";
+import API_URL from "../config/api.js";;
 
 export default function RequestDemo() {
 
@@ -38,7 +38,7 @@ export default function RequestDemo() {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:5000/api/demo/request", form);
+      await axios.post(`${API_URL}/api/demo/request`, form);
 
       alert("Demo Request Sent ✅");
 

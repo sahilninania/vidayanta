@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
+import API_URL from "../config/api.js";
 import axios from "axios";
 
 export default function AttendanceClasses() {
@@ -13,7 +14,7 @@ export default function AttendanceClasses() {
     if (!institutionCode) return;
     const fetchClasses = async () => {
       const res = await axios.get(
-        `http://localhost:5000/api/classes/institution-classes?institutionCode=${institutionCode}`
+        `${API_URL}/api/classes/institution-classes?institutionCode=${institutionCode}`
       );
       setClasses(res.data?.data || []);
     };

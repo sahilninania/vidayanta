@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//import API from "../config/api";
+import API_URL from "../config/api.js";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -23,7 +23,7 @@ export default function MyClass() {
     const fetchData = async () => {
       try {
         // ✅ GET CLASS
-        const classRes = await axios.post("http://localhost:5000/api/classes/get-my-class", {
+        const classRes = await axios.post(`${API_URL}/api/classes/get-my-class`, {
           teacherId,
           institutionCode,
         });
@@ -40,7 +40,7 @@ export default function MyClass() {
 
         // ✅ GET STUDENTS
         const res = await axios.get(
-          `http://localhost:5000/api/student/class/${cls.className}/${cls.section}?institutionCode=${institutionCode}`
+          `${API_URL}/api/student/class/${cls.className}/${cls.section}?institutionCode=${institutionCode}`
         );
 
         setStudents(res.data.data || []);
@@ -57,7 +57,7 @@ export default function MyClass() {
     if (!window.confirm("Delete this student?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/student/${id}`);
+      await axios.delete(`${API_URL}/api/student/${id}`);
 
       // remove instantly
       setStudents((prev) => prev.filter((stu) => stu._id !== id));

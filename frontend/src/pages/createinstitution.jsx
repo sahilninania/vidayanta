@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import API from '../config/api';
+import API_URL from "../config/api.js";
 import { useNavigate } from 'react-router-dom';
 import Superadminlayout from '../layout/superadmindashboardlayout';
 import axios from 'axios';
@@ -21,7 +21,7 @@ function CreateInstitution() {
       return;
     }
     const res = await axios.post(
-      "http://localhost:5000/api/superadmin/create-institution",
+      `${API_URL}/api/superadmin/create-institution`,
       {
         institutionName,
         branch,

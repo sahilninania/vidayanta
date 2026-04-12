@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
+import API_URL from "../config/api.js";
 
 export default function TeacherAnnouncement() {
 
@@ -16,7 +17,7 @@ export default function TeacherAnnouncement() {
   const fetchAnnouncements = useCallback(async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/announcement/teacher",
+        `${API_URL}/api/announcement/teacher`,
         {
           params: {
             teacherId,
@@ -38,7 +39,7 @@ export default function TeacherAnnouncement() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/announcement/${id}`,
+        `${API_URL}/api/announcement/${id}`,
         {
           params: { userId: teacherId }
         }

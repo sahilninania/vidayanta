@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import TeacherLayout from "../layout/teacherdashboardlayout";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
@@ -33,7 +33,7 @@ export default function AddStudent() {
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/classes/get-my-class",
+          `${API_URL}/api/classes/get-my-class`,
           { teacherId }
         );
 
@@ -67,7 +67,7 @@ export default function AddStudent() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/student/create-student",
+        `${API_URL}/api/student/create-student`,
         { ...form, institutionCode, branch, teacherId },
         { withCredentials: true }
       );

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
-
+import API_URL from "../config/api.js";
 export default function UploadResult() {
   const [data, setData] = useState([]);
 
@@ -23,7 +23,7 @@ export default function UploadResult() {
       const teacherId = localStorage.getItem("teacherId");
 
       const res = await axios.post(
-        "http://localhost:5000/api/classes/teacher-classes",
+        `${API_URL}/api/classes/teacher-classes`,
         { teacherId }
       );
 
@@ -66,7 +66,7 @@ export default function UploadResult() {
   const fetchStudents = useCallback(async (section) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/student/by-class-section",
+        `${API_URL}/api/student/by-class-section`,
         {
           teacherId: localStorage.getItem("teacherId"),
           institutionCode: localStorage.getItem("institutionCode"),
@@ -151,7 +151,7 @@ export default function UploadResult() {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:5000/api/result/create", {
+      await axios.post(`${API_URL}/api/result/create`, {
         teacherId: localStorage.getItem("teacherId"),
         institutionCode: localStorage.getItem("institutionCode"),
         ...form,

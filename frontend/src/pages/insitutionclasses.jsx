@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useNavigate } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
@@ -14,7 +14,7 @@ export default function InstitutionClasses() {
   useEffect(() => {
     const fetchClasses = async () => {
       const res = await axios.get(
-        `http://localhost:5000/api/classes/institution-classes?institutionCode=${institutionCode}`
+        `${API_URL}/api/classes/institution-classes?institutionCode=${institutionCode}`
       );
 
       setClasses(res.data.data);

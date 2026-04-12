@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useParams } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
@@ -14,7 +14,7 @@ export default function ViewSingleClass() {
 
     const fetchClass = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/classes/${id}`);
+        const res = await axios.get(`${API_URL}/api/classes/${id}`);
         setData(res.data.data || null);
       } catch (err) {
         console.error("Fetch class error 👉", err);

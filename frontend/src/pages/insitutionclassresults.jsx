@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useParams } from "react-router-dom";
 
 
@@ -12,7 +12,7 @@ export default function ClassResults() {
   const fetchResults = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/students/results/${id}?examType=${examType}`
+        `${API_URL}/api/students/results/${id}?examType=${examType}`
       );
 
       setStudents(res.data.data);

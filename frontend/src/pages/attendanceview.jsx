@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
@@ -19,7 +19,7 @@ export default function AttendanceView() {
 
     const fetchData = async () => {
       const res = await axios.get(
-        `http://localhost:5000/api/attendance/student-details?studentId=${student._id}`
+        `${API_URL}/api/attendance/student-details?studentId=${student._id}`
       );
 
       setData(res.data?.records || []);

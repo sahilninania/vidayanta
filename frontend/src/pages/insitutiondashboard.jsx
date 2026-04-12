@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 // import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
 import InstitutionSidebar from "../components/institutionsidebar";
@@ -22,7 +22,7 @@ export default function InstitutionDashboard() {
         const institutionCode = localStorage.getItem("institutionCode");
 
         const res = await axios.get(
-          `http://localhost:5000/api/dashboard?institutionCode=${institutionCode}`
+          `${API_URL}/api/dashboard?institutionCode=${institutionCode}`
         );
 
         setData(res.data.data);

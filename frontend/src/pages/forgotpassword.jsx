@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "../components/navbarhome";
 import Footer from "../components/footerhome";
+import API_URL from "../config/api.js";
 import axios from "axios";
 
 export default function ForgotPassword() {
@@ -56,7 +57,7 @@ export default function ForgotPassword() {
       }
 
       const res = await axios.post(
-        "http://localhost:5000/api/forgot/send-otp",
+        `${API_URL}/api/forgot/send-otp`,
         form
       );
 
@@ -82,7 +83,7 @@ export default function ForgotPassword() {
       }
 
       const res = await axios.post(
-        "http://localhost:5000/api/forgot/verify-otp",
+        `${API_URL}/api/forgot/verify-otp`,
         {
           email: form.email,
           otp,

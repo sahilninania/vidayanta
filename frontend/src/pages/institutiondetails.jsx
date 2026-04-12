@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api.js";
 import Superadminlayout from "../layout/superadmindashboardlayout";
 
 import { FaPhone, FaEnvelope, FaMapMarkerAlt ,} from "react-icons/fa";
@@ -13,7 +14,7 @@ export default function InstitutionDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/superadmin/institution-full/${id}`)
+      .get(`${API_URL}/api/superadmin/institution-full/${id}`)
       .then((res) => setData(res.data.data))
       .catch((err) => console.log(err));
   }, [id]);

@@ -10,7 +10,7 @@ import Notifications from "../components/notification";
 import RecentActivity from "../components/recentactivity";
 import Superadminlayout from "../layout/superadmindashboardlayout"; // ✅ FIXED
 import axios from "axios";
-
+import API_URL from "../config/api.js";
 export default function Dashboard() {
 
   const [data, setData] = useState({});
@@ -18,7 +18,7 @@ export default function Dashboard() {
   
   const fetchStats = useCallback(async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/superadmin/dashboard");
+      const res = await axios.get(`${API_URL}/api/superadmin/dashboard`);
      setData(res?.data?.data || {});
      console.log("FULL DATA 👉", res.data);
 console.log("ACTUAL DATA 👉", res.data.data);

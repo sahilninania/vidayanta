@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import API from "../config/api";
+import API_URL from "../config/api.js";
 import SuperAdminLayout from "../layout/superadmindashboardlayout";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ export default function DemoRequests() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/demo/all");
+      const res = await axios.get(`${API_URL}/api/demo/all`);
       setData(res.data?.data || []);
     } catch (err) {
       console.log(err);
@@ -27,7 +27,7 @@ export default function DemoRequests() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/demo/${id}`);
+      await axios.delete(`${API_URL}/api/demo/${id}`);
       setData((prev) => prev.filter((item) => item._id !== id));
     } catch (err) {
       console.log(err);
