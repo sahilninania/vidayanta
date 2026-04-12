@@ -2,6 +2,7 @@ import "./config/env.js"; // 🔥 FIRST LINE
 import express from "express";
 const app = express();
 import cors from "cors";
+import "./workers/emailworker.js";
 import { errorHandler } from "./middlerwars/errormiddleware.js";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
