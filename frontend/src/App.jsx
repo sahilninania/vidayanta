@@ -94,8 +94,8 @@ function App() {
       <Route path="/institution/classes" element={<InstitutionClasses />} />
       <Route path="/institution/students" element={<InstitutionStudents />} />
        <Route path="/teacher/dashboard" element={<TeacherDashboard/>}></Route>
-       <Route path ="/classes" element={<ClassPage/>}></Route>
-      
+       
+       <Route path ="/class/:id" element={<ClassStudents/>}></Route>
        <Route path="/teacher/add-students" element={<AddStudent/>}></Route>
        <Route path="/teachers/by-institution" element={<ViewTeachers/>}></Route>
        <Route path="/teacher/my-class" element={<MyClass />} />
