@@ -18,7 +18,7 @@ import AddClass from "./pages/class";
 import TeacherDashboard from "./pages/teacherdashboard"
 import  AddStudent from "./pages/createstudent";
 import ViewTeachers from "./pages/viewteacher";
-// import InstitutionClasses from "./pages/insitutionclasses";
+// import ClassPage from "./pages/institutionstudentClass";
 import ClassStudents from "./pages/insitutionstudent";
 import Attendance from "./pages/insitutionattandence";
 import ClassAttendance from "./pages/institutionclassattandence";
@@ -95,7 +95,7 @@ function App() {
       <Route path="/institution/students" element={<InstitutionStudents />} />
        <Route path="/teacher/dashboard" element={<TeacherDashboard/>}></Route>
        <Route path ="/classes" element={<ClassPage/>}></Route>
-       <Route path ="/class/:id" element={<ClassStudents/>}></Route>
+      
        <Route path="/teacher/add-students" element={<AddStudent/>}></Route>
        <Route path="/teachers/by-institution" element={<ViewTeachers/>}></Route>
        <Route path="/teacher/my-class" element={<MyClass />} />
