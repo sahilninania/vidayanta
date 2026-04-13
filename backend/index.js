@@ -1,5 +1,7 @@
 import "./config/env.js"; // 🔥 FIRST LINE
 import express from "express";
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 const app = express();
 app.set("trust proxy", 1);
 
@@ -7,13 +9,13 @@ import cors from "cors";
 import "./workers/emailworker.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import dns from "dns"; // 🔥 email fix
+// import dns from "dns"; // 🔥 email fix
 import { errorHandler } from "./middlerwars/errormiddleware.js";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 
 // 🔥 FORCE IPV4 (email fix)
-dns.setDefaultResultOrder("ipv4first");
+// dns.setDefaultResultOrder("ipv4first");
 
 // ================= IMPORT ROUTES =================
 import createInstitutionRoutes from "./routes/createinstitutionroutes.js";
