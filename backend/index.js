@@ -3,6 +3,8 @@ import express from "express";
 const app = express();
 import cors from "cors";
 import "./workers/emailworker.js";
+import path from "path";
+import { fileURLToPath } from "url";
 import { errorHandler } from "./middlerwars/errormiddleware.js";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
@@ -30,7 +32,8 @@ import otpRoutes from "./routes/otproutes.js";
 
 
 const port = process.env.PORT || 8000;
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -89,8 +92,19 @@ app.use("/api/teacher", teacherRoutes);
 app.use("/api/student/dashboard", studentRoutes);
 app.use("/api/forgot", otpRoutes);
 app.use(errorHandler);
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+// 🔥 SPA fallback (MOST IMPORTANT)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 // Start server
 app.listen(port, () => {
   connectDB();
   console.log(`Server is running on port ${port}`);
 });
+
+
+
+// 🔥 frontend serve
