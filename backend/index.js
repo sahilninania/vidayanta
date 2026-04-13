@@ -2,6 +2,7 @@ import "./config/env.js"; // 🔥 FIRST LINE
 import express from "express";
 import dns from "dns";
 dns.setDefaultResultOrder("ipv4first");
+
 const app = express();
 app.set("trust proxy", 1);
 
@@ -9,13 +10,9 @@ import cors from "cors";
 import "./workers/emailworker.js";
 import path from "path";
 import { fileURLToPath } from "url";
-// import dns from "dns"; // 🔥 email fix
 import { errorHandler } from "./middlerwars/errormiddleware.js";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
-
-// 🔥 FORCE IPV4 (email fix)
-// dns.setDefaultResultOrder("ipv4first");
 
 // ================= IMPORT ROUTES =================
 import createInstitutionRoutes from "./routes/createinstitutionroutes.js";
@@ -49,7 +46,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 app.use(cookieParser());
 
-// 🔥 CORS
+// ================= CORS =================
 const allowedOrigins = [
   "http://localhost:5173",
   "https://vidayanta.nsjbgroups.com"
@@ -94,13 +91,14 @@ app.use("/api/forgot", otpRoutes);
 app.use(errorHandler);
 
 // ================= FRONTEND SERVE =================
+const distPath = path.join(__dirname, "dist");
 
-// 🔥 serve static files (React build)
-app.use(express.static(path.join(__dirname, "dist")));
+// 🔥 serve static files
+app.use(express.static(distPath));
 
-// 🔥 SPA fallback (VERY IMPORTANT)
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+// 🔥 SPA fallback (IMPORTANT)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
 // ================= START SERVER =================
