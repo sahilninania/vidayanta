@@ -7,7 +7,7 @@ const app = express();
 app.set("trust proxy", 1);
 
 import cors from "cors";
-import "./workers/emailworker.js";
+// import "./workers/emailworker.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { errorHandler } from "./middlerwars/errormiddleware.js";
@@ -93,13 +93,13 @@ app.use(errorHandler);
 // ================= FRONTEND SERVE =================
 const distPath = path.join(__dirname, "dist");
 
-// 🔥 serve static files
-app.use(express.static(distPath));
+// // 🔥 serve static files
+// app.use(express.static(distPath));
 
-// 🔥 SPA fallback (IMPORTANT)
-app.use((req, res) => {
-  res.sendFile(path.join(distPath, "index.html"));
-});
+// // 🔥 SPA fallback (IMPORTANT)
+// app.use((req, res) => {
+//   res.sendFile(path.join(distPath, "index.html"));
+// });
 
 // ================= START SERVER =================
 app.listen(port, () => {
