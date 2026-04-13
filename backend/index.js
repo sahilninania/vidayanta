@@ -96,7 +96,7 @@ app.use(errorHandler);
 app.use(express.static(path.join(__dirname, "dist")));
 
 // 🔥 SPA fallback (MOST IMPORTANT)
-app.get("/*", (req, res) => {
+app.get("/:path(*)", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 // Start server
