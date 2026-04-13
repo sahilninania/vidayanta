@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config(); 
 // import emailQueue from "../queue/emailqueue.js";
 const { default: emailQueue } = await import("../queue/emailqueue.js");
-import { transporter } from "../utils/sendemail.js";
+import { sendEmail } from "../utils/sendemail.js";
 
 console.log("🔥 Worker started...");
 
@@ -134,12 +134,11 @@ emailQueue.process(async (job) => {
 
   // ================== SEND EMAIL ==================
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL, // 👈 unchanged
-      to: email,
-      subject,
-      html,
-    });
+    await sendEmail({
+        to: email,
+        subject,
+        html,
+      });
 
     console.log("✅ Email sent:", email);
 
