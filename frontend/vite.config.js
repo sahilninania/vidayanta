@@ -6,4 +6,8 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss(),
   ],
+  build: {
+  outDir: "../backend/dist",
+  emptyOutDir: true,
+}
 })
