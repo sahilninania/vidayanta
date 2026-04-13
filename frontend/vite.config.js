@@ -6,8 +6,7 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss(),
   ],
-  build: {
-  outDir: "../backend/dist",
-  emptyOutDir: true,
-}
+   build: {
+    outDir: "dist", // 🔥 Vercel ke liye correct
+  }
 })
