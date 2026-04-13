@@ -1,6 +1,7 @@
 import "./config/env.js"; // 🔥 FIRST LINE
 import express from "express";
 const app = express();
+app.set("trust proxy", 1);
 
 import cors from "cors";
 import "./workers/emailworker.js";
