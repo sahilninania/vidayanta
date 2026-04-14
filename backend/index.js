@@ -7,7 +7,7 @@ const app = express();
 app.set("trust proxy", 1);
 
 import cors from "cors";
-// import "./workers/emailworker.js";
+import "./workers/emailworker.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { errorHandler } from "./middlerwars/errormiddleware.js";
