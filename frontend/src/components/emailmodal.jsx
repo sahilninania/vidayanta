@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api.js";
 
 export default function EmailModal({ onClose, institutions }) {
 
@@ -14,7 +15,7 @@ export default function EmailModal({ onClose, institutions }) {
        if (loading) return;
       setLoading(true);
       await axios.post(
-        "http://localhost:5000/api/superadmin/send-email",
+        `${API_URL}/api/superadmin/send-email`,
         {
           type,
           institutionId: selected,
