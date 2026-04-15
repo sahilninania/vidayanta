@@ -129,7 +129,7 @@ export default function Navbar() {
               Vidayanta
             </h1>
 
-            <ul className="space-y-5 font-semibold flex flex-col">
+            <ul className="space-y-5 font-semibold flex flex-col text-white">
 
               <Link to="/" onClick={() => setMenu(false)}
                 className={isActive("/") ? "text-[#2dd4bf]" : ""}
