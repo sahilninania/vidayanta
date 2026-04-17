@@ -2,26 +2,26 @@ import mongoose from "mongoose";
  const studentSchema = new mongoose.Schema({
     name:{
         type:String,
-        require:true
+        required: true
     },
     email:{
         type:String,
-        require:true,
+        required: true,
         lowercase:true,
         trim:true
     },
     mobile:{
         type:Number,
-        require:true,
+        required: true,
     },
     className:{
         type:String,
-        requirq:true,
+        required: true,
         index:true
     },
     section:{
         type:String,
-        required:true,
+        required: true,
         index:true
     },
     rollNumber:{
@@ -31,7 +31,7 @@ import mongoose from "mongoose";
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        require:true
+        required:true
     },
     institutionCode:{
         type:String,

@@ -82,14 +82,14 @@ export const createStudent = async (req, res) => {
     const plainPassword = generatePassword();
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
     // ✅ 5. FIX → branch add karo
-    const user = await User.create({
-      username,
-      password: hashedPassword,
-      role: "student",
-      institutionCode,
-      branch, // 🔥 MOST IMPORTANT FIX
-      email
-    });
+      const user = await User.create([{
+        username,
+        password: hashedPassword,
+        role: "student",
+        institutionCode,
+        branch,
+        email
+      }], { session });
     const student = await Student.create([{
       name,
       email,
