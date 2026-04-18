@@ -1,12 +1,14 @@
 import Assignment from "../models/assignmentmodel.js";
 import Teacher from "../models/teachermodel.js";
 import mongoose from "mongoose";
+import Class from "../models/classmodel.js";
 
 // ✅ ASSIGN TEACHER TO CLASS
 export const assignTeacher = async (req, res) => {
   try {
     const { classId, teacherId, institutionCode, subject } = req.body;
 
+    // 🔹 VALIDATION
     if (!classId || !teacherId || !institutionCode || !subject) {
       return res.status(400).json({
         message: "All fields required"
@@ -22,7 +24,7 @@ export const assignTeacher = async (req, res) => {
       });
     }
 
-    // ✅ GET TEACHER
+    // 🔹 GET TEACHER
     const teacher = await Teacher.findById(teacherId)
       .select("subjects")
       .lean();
@@ -33,27 +35,40 @@ export const assignTeacher = async (req, res) => {
       });
     }
 
-    // 🔥 VALIDATE SUBJECT
+    // 🔹 VALIDATE SUBJECT
     if (!teacher.subjects.includes(subject)) {
       return res.status(400).json({
         message: "Teacher does not teach this subject"
       });
     }
 
-    // 🔥 CHECK DUPLICATE
-    const existing = await Assignment.findOne({
+    // 🔹 CHECK DUPLICATE IN ASSIGNMENT
+    const existingAssignment = await Assignment.findOne({
       classId,
       subject,
       institutionCode
     });
 
-    if (existing) {
+    if (existingAssignment) {
       return res.status(400).json({
         message: "Subject already assigned to this class"
       });
     }
 
-    // ✅ CREATE
+    // 🔹 CHECK DUPLICATE IN CLASS MODEL (IMPORTANT)
+    const classData = await Class.findById(classId);
+
+    const already = classData.subjectTeachers.find(
+      (s) => s.subject === subject
+    );
+
+    if (already) {
+      return res.status(400).json({
+        message: "Subject already exists in class"
+      });
+    }
+
+    // 🔹 CREATE ASSIGNMENT
     const assignment = await Assignment.create({
       classId,
       teacherId,
@@ -61,13 +76,24 @@ export const assignTeacher = async (req, res) => {
       institutionCode
     });
 
+    // 🔥 UPDATE CLASS MODEL (MAIN FIX)
+    await Class.findByIdAndUpdate(classId, {
+      $push: {
+        subjectTeachers: {
+          subject,
+          teacher: teacherId
+        }
+      }
+    });
+
     return res.status(201).json({
       success: true,
+      message: "Teacher assigned successfully",
       assignment
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("ASSIGN ERROR 👉", error.message);
     return res.status(500).json({
       message: "Server Error"
     });
@@ -75,10 +101,10 @@ export const assignTeacher = async (req, res) => {
 };
 
 
-// ✅ GET ALL ASSIGNMENTS (Optimized)
+// ✅ GET ALL ASSIGNMENTS
 export const getAssignments = async (req, res) => {
   try {
-    const { institutionCode } = req.query; // ✅ FIXED (GET → query)
+    const { institutionCode } = req.query;
 
     if (!institutionCode) {
       return res.status(400).json({
@@ -87,7 +113,7 @@ export const getAssignments = async (req, res) => {
     }
 
     const assignments = await Assignment.find({ institutionCode })
-      .populate("teacherId", "name subject")
+      .populate("teacherId", "teacherName subjects")
       .populate("classId", "className section")
       .lean();
 
