@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import API_URL from "../config/api.js";
+import { useParams, useNavigate } from "react-router-dom";
 import InstitutionLayout from "../layout/institutitondashboardlayout";
 import axios from "axios";
 
-export default function AssignedTeachers() {
-  const [classes, setClasses] = useState([]);
+export default function AssignTeacher() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [classData, setClassData] = useState(null);
   const [teachers, setTeachers] = useState([]);
   const [subjects, setSubjects] = useState([]);
-
-  const [selectedClass, setSelectedClass] = useState(null); // 🔥 KEY
 
   const [form, setForm] = useState({
     teacherId: "",
@@ -17,23 +19,27 @@ export default function AssignedTeachers() {
 
   const institutionCode = localStorage.getItem("institutionCode");
 
-  // ✅ FETCH DATA
+  // ✅ FETCH CLASS
   useEffect(() => {
-    const fetchData = async () => {
-      const classRes = await axios.post(
-        `${API_URL}/api/classes/by-institution`,
-        { institutionCode }
-      );
+    const fetchClass = async () => {
+      const res = await axios.get(`${API_URL}/api/classes/${id}`);
+      setClassData(res.data.class);
+    };
 
-      const teacherRes = await axios.get(
+    fetchClass();
+  }, [id]);
+
+  // ✅ FETCH TEACHERS
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      const res = await axios.get(
         `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
       );
 
-      setClasses(classRes.data.classes || []);
-      setTeachers(teacherRes.data.teachers || []);
+      setTeachers(res.data.teachers || []);
     };
 
-    fetchData();
+    fetchTeachers();
   }, []);
 
   // ✅ TEACHER CHANGE
@@ -56,8 +62,10 @@ export default function AssignedTeachers() {
     }));
   };
 
-  // ✅ ASSIGN
-  const handleAssign = async () => {
+  // ✅ SUBMIT
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (!form.teacherId || !form.subject) {
       alert("Select teacher & subject");
       return;
@@ -65,18 +73,14 @@ export default function AssignedTeachers() {
 
     try {
       await axios.post(`${API_URL}/api/assign`, {
-        classId: selectedClass._id,
+        classId: id,
         teacherId: form.teacherId,
         subject: form.subject,
         institutionCode
       });
 
       alert("Assigned ✅");
-
-      // reset
-      setSelectedClass(null);
-      setForm({ teacherId: "", subject: "" });
-      setSubjects([]);
+      navigate("/institution/assign-class");
 
     } catch (err) {
       alert(err?.response?.data?.message || "Error");
@@ -85,25 +89,28 @@ export default function AssignedTeachers() {
 
   return (
     <InstitutionLayout>
-      <div className="p-6">
+      <div className="p-6 flex justify-center">
 
-        <h1 className="text-3xl font-bold mb-6 text-[#1fa2a6]">
-          Assign Teacher
-        </h1>
+        <div className="w-full max-w-md p-4 border rounded shadow">
 
-        {/* 🔥 IF CLASS SELECTED → SHOW ONLY FORM */}
-        {selectedClass ? (
-          <div className="max-w-md mx-auto p-4 border rounded shadow">
+          <h1 className="text-xl font-bold text-[#1fa2a6] mb-4">
+            Assign Teacher
+          </h1>
 
-            <h2 className="font-bold text-lg mb-3">
-              Class {selectedClass.className} - {selectedClass.section}
-            </h2>
+          {/* CLASS INFO */}
+          {classData && (
+            <div className="mb-4 p-3 bg-gray-100 rounded">
+              Class {classData.className} - {classData.section}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-3">
 
             {/* TEACHER */}
             <select
-              className="border p-2 w-full mb-2"
               value={form.teacherId}
               onChange={(e) => handleTeacherChange(e.target.value)}
+              className="border p-2 w-full"
             >
               <option value="">Select Teacher</option>
               {teachers.map(t => (
@@ -115,9 +122,9 @@ export default function AssignedTeachers() {
 
             {/* SUBJECT */}
             <select
-              className="border p-2 w-full mb-2"
               value={form.subject}
               onChange={(e) => handleSubjectChange(e.target.value)}
+              className="border p-2 w-full"
               disabled={!subjects.length}
             >
               <option value="">Select Subject</option>
@@ -128,41 +135,21 @@ export default function AssignedTeachers() {
               ))}
             </select>
 
-            {/* BUTTONS */}
-            <button
-              onClick={handleAssign}
-              className="bg-green-600 text-white px-3 py-1 rounded w-full mb-2"
-            >
+            <button className="bg-green-600 text-white w-full py-2 rounded">
               Assign
             </button>
 
             <button
-              onClick={() => setSelectedClass(null)}
-              className="bg-gray-400 text-white px-3 py-1 rounded w-full"
+              type="button"
+              onClick={() => navigate("/institution/assign-class")}
+              className="bg-gray-400 text-white w-full py-2 rounded"
             >
               Back
             </button>
 
-          </div>
-        ) : (
-          /* 🔥 SHOW ALL CLASSES */
-          <div className="grid md:grid-cols-2 gap-4">
+          </form>
 
-            {classes.map(cls => (
-              <div
-                key={cls._id}
-                className="p-4 border rounded shadow cursor-pointer hover:shadow-lg"
-                onClick={() => setSelectedClass(cls)}
-              >
-                <h2 className="font-bold text-lg">
-                  Class {cls.className} - {cls.section}
-                </h2>
-              </div>
-            ))}
-
-          </div>
-        )}
-
+        </div>
       </div>
     </InstitutionLayout>
   );
