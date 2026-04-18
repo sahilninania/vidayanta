@@ -20,9 +20,7 @@ export const createStudent = async (req, res) => {
       teacherId
     } = req.body;
 
-    console.log("NEW CODE RUNNING ✅"); // 🔥 check deploy
-
-    // ✅ 1. VALIDATION
+    // ✅ VALIDATION
     if (
       !institutionCode ||
       !name ||
@@ -43,11 +41,17 @@ export const createStudent = async (req, res) => {
       });
     }
 
-    // ✅ 2. FETCH DATA
+    // ✅ FETCH CLASS (if teacher)
     const classData = teacherId
       ? await Class.findOne({ classIncharge: teacherId })
       : null;
 
+    if (classData) {
+      className = classData.className;
+      section = classData.section;
+    }
+
+    // ✅ CHECK DUPLICATE ROLL NUMBER
     const existingStudent = await Student.findOne({
       className,
       section,
@@ -55,18 +59,14 @@ export const createStudent = async (req, res) => {
       institutionCode
     });
 
-    const institution = await Institution.findOne({ institutionCode });
-
-    if (classData) {
-      className = classData.className;
-      section = classData.section;
-    }
-
     if (existingStudent) {
       return res.status(400).json({
         message: "Roll number already exists"
       });
     }
+
+    // ✅ CHECK INSTITUTION
+    const institution = await Institution.findOne({ institutionCode });
 
     if (!institution) {
       return res.status(404).json({
@@ -74,7 +74,7 @@ export const createStudent = async (req, res) => {
       });
     }
 
-    // ✅ 3. GENERATE USER DATA
+    // ✅ GENERATE USER DATA
     const branch = String(institution.branch).padStart(2, "0");
 
     const username = await generateUsername(
@@ -88,17 +88,17 @@ export const createStudent = async (req, res) => {
     const plainPassword = generatePassword();
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-    // ✅ 4. CREATE USER
+    // 🔥 IMPORTANT: ALWAYS CREATE NEW USER
     const user = await User.create({
       username,
       password: hashedPassword,
       role: "student",
       institutionCode,
       branch,
-      email
+      email   // ✔ same email allowed
     });
 
-    // ✅ 5. CREATE STUDENT
+    // ✅ CREATE STUDENT
     const student = await Student.create({
       name,
       email,
@@ -110,7 +110,7 @@ export const createStudent = async (req, res) => {
       institutionCode
     });
 
-    // ✅ 6. SEND EMAIL
+    // ✅ SEND LOGIN DETAILS
     await emailQueue.add({
       type: "CREDENTIALS",
       email,
@@ -121,7 +121,6 @@ export const createStudent = async (req, res) => {
       }
     });
 
-    // ✅ 7. RESPONSE
     return res.status(201).json({
       success: true,
       message: "Student created successfully",
@@ -129,7 +128,7 @@ export const createStudent = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("🔥 ERROR:", error);
+    console.error("ERROR:", error);
 
     return res.status(500).json({
       success: false,

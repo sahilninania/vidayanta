@@ -31,7 +31,7 @@ import mongoose from "mongoose";
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required:true
+        required:false
     },
     institutionCode:{
         type:String,
