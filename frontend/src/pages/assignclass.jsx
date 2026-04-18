@@ -50,10 +50,7 @@ export default function AssignClass() {
         ) : (
           <>
             {/* 🔥 Selection Text */}
-            <p className="mb-4 text-gray-600">
-              👉 Select a class to assign teacher
-            </p>
-
+           
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 
               {classes.map((cls) => (

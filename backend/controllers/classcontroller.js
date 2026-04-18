@@ -282,8 +282,8 @@ export const getStudentsByClass = async (req, res) => {
 export const getSingleClass = async (req, res) => {
   try {
     const cls = await Class.findById(req.params.id)
-      .populate("classIncharge")
-      .populate("subjectTeachers.teacher");
+      .populate("classIncharge", "teacherName")
+      .populate("subjectTeachers.teacher", "teacherName"); // 🔥 FIX
 
     res.json({
       success: true,
