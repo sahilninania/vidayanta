@@ -69,28 +69,35 @@ export const assignTeacher = async (req, res) => {
     }
 
     // 🔹 CREATE ASSIGNMENT
-    const assignment = await Assignment.create({
-      classId,
-      teacherId,
-      subject,
-      institutionCode
-    });
+   const assignment = await Assignment.create({
+  classId,
+  teacherId,
+  subject,
+  institutionCode
+});
 
-    // 🔥 UPDATE CLASS MODEL (MAIN FIX)
-    await Class.findByIdAndUpdate(classId, {
-      $push: {
-        subjectTeachers: {
-          subject,
-          teacher: teacherId
-        }
+// 🔥 YAHAN ADD KARNA HAI
+const updated = await Class.findByIdAndUpdate(
+  classId,
+  {
+    $push: {
+      subjectTeachers: {
+        subject,
+        teacher: teacherId
       }
-    });
+    }
+  },
+  { new: true }
+);
 
-    return res.status(201).json({
-      success: true,
-      message: "Teacher assigned successfully",
-      assignment
-    });
+console.log("UPDATED CLASS 👉", updated);
+
+// ✅ RESPONSE
+return res.status(201).json({
+  success: true,
+  message: "Teacher assigned successfully",
+  assignment
+});
 
   } catch (error) {
     console.error("ASSIGN ERROR 👉", error.message);
