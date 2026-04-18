@@ -16,7 +16,7 @@ export default function ResultView() {
     const fetchResults = async () => {
       try {
         const res = await axios.get(
-          `${API_URL}//api/result/student?studentId=${student._id}`
+          `${API_URL}/api/result/student?studentId=${student._id}`
         );
 
         const grouped = res.data.data.reduce((acc, test) => {
