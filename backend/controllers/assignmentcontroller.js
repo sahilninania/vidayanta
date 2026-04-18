@@ -5,17 +5,14 @@ import mongoose from "mongoose";
 // ✅ ASSIGN TEACHER TO CLASS
 export const assignTeacher = async (req, res) => {
   try {
-    const { classId, teacherId, institutionCode } = req.body;
+    const { classId, teacherId, institutionCode, subject } = req.body;
 
-    // ✅ Validation
-    if (!classId || !teacherId || !institutionCode) {
+    if (!classId || !teacherId || !institutionCode || !subject) {
       return res.status(400).json({
-        success: false,
         message: "All fields required"
       });
     }
 
-    // ✅ ObjectId validation (important)
     if (
       !mongoose.Types.ObjectId.isValid(classId) ||
       !mongoose.Types.ObjectId.isValid(teacherId)
@@ -25,9 +22,9 @@ export const assignTeacher = async (req, res) => {
       });
     }
 
-    // 🔥 Get teacher (only needed field)
+    // ✅ GET TEACHER
     const teacher = await Teacher.findById(teacherId)
-      .select("subject")
+      .select("subjects")
       .lean();
 
     if (!teacher) {
@@ -36,14 +33,19 @@ export const assignTeacher = async (req, res) => {
       });
     }
 
-    const subject = teacher.subject;
+    // 🔥 VALIDATE SUBJECT
+    if (!teacher.subjects.includes(subject)) {
+      return res.status(400).json({
+        message: "Teacher does not teach this subject"
+      });
+    }
 
-    // 🔥 Check duplicate assignment
+    // 🔥 CHECK DUPLICATE
     const existing = await Assignment.findOne({
       classId,
       subject,
       institutionCode
-    }).lean();
+    });
 
     if (existing) {
       return res.status(400).json({
@@ -51,7 +53,7 @@ export const assignTeacher = async (req, res) => {
       });
     }
 
-    // ✅ Create assignment
+    // ✅ CREATE
     const assignment = await Assignment.create({
       classId,
       teacherId,
@@ -65,9 +67,8 @@ export const assignTeacher = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("ASSIGN ERROR 👉", error.message);
+    console.error(error);
     return res.status(500).json({
-      success: false,
       message: "Server Error"
     });
   }

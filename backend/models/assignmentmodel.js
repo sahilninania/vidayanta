@@ -13,7 +13,7 @@ const assignmentSchema = new mongoose.Schema({
         index:true,
     },
     subject:{
-        type:[String],
+        type:String,
         requried:true,
         trim:true
     },
