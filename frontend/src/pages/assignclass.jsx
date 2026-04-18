@@ -1,187 +1,111 @@
 import { useEffect, useState } from "react";
-import API_URL from "../config/api.js";
-import TeacherLayout from "../layout/teacherdashboardlayout";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../config/api.js";
+import InstitutionLayout from "../layout/institutitondashboardlayout";
 
-export default function GiveHomework() {
-  const [data, setData] = useState([]);
+export default function AssignTeacher() {
+  const { classId } = useParams();
+  const navigate = useNavigate();
 
-  const [className, setClassName] = useState("");
-  const [section, setSection] = useState("");
-  const [subject, setSubject] = useState("");
-  const [description, setDescription] = useState("");
+  const [teachers, setTeachers] = useState([]);
+  const [selectedTeacher, setSelectedTeacher] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const [classes, setClasses] = useState([]);
+  const institutionCode = localStorage.getItem("institutionCode");
 
+  // ✅ Fetch Teachers
+  const fetchTeachers = async () => {
+    try {
+      const res = await axios.get(
+        `${API_URL}/api/teachers?institutionCode=${institutionCode}`
+      );
+      setTeachers(res.data.teachers || []);
+    } catch (err) {
+      console.error("Error fetching teachers", err);
+    }
+  };
+
+  // ✅ Load Teachers
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
-        const teacherId = localStorage.getItem("teacherId");
-
-        const res = await axios.post(
-          `${API_URL}/api/classes/teacher-classes`,
-          { teacherId }
-        );
-
-        const apiData = res.data.data || [];
-
-        console.log("🔥 API DATA:", apiData);
-
-        setData(apiData);
-
-        // ✅ FIX: use classId.className
-        const uniqueClasses = [
-          ...new Set(apiData.map(d => d.classId?.className))
-        ].filter(Boolean);
-
-        setClasses(uniqueClasses);
-
-      } catch (error) {
-        console.log(error);
+        setLoading(true);
+        await fetchTeachers();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchData();
+    loadData();
   }, []);
 
-  // ✅ HANDLE CLASS CHANGE
-  const handleClassChange = (value) => {
-    setClassName(value);
-    setSection("");
-    setSubject("");
-  };
-
-  // ✅ HANDLE SECTION CHANGE
-  const handleSectionChange = (value) => {
-    setSection(value);
-    setSubject("");
-  };
-
-  // ✅ SECTIONS FILTER
-  const sections = data
-    .filter(d => d.classId?.className === className)
-    .map(d => d.classId?.section)
-    .filter((v, i, arr) => arr.indexOf(v) === i);
-
-  // ✅ SUBJECTS FILTER
-  const subjects = data
-    .filter(
-      d =>
-        d.classId?.className === className &&
-        d.classId?.section === section
-    )
-    .map(d => d.subject)
-    .filter((v, i, arr) => arr.indexOf(v) === i);
-
-  // ✅ SUBMIT
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const teacherId = localStorage.getItem("teacherId");
-    const institutionCode = localStorage.getItem("institutionCode");
-
-    if (!className || !section || !subject || !description) {
-      alert("All fields required");
+  // ✅ HANDLE ASSIGN (FINAL FIX)
+  const handleAssignTeacher = async () => {
+    if (!selectedTeacher) {
+      alert("Please select a teacher");
       return;
     }
 
     try {
-      await axios.post(`${API_URL}/api/homework/create`, {
-        className,
-        section,
-        subject,
-        description,
-        teacherId,
+      await axios.post(`${API_URL}/api/assign`, {
+        classId,
+        teacherId: selectedTeacher,
         institutionCode
       });
 
-      alert("✅ Homework Assigned");
-
-      setDescription("");
-      setSubject("");
-      setSection("");
+      alert("✅ Teacher assigned successfully!");
+      navigate("/institution/assign-class");
 
     } catch (error) {
-      console.log(error);
-      alert(
-        error?.response?.data?.message || "Error assigning homework"
-      );
+      console.log("🔥 FULL ERROR:", error);
+
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong";
+
+      alert(message); // 🔥 THIS WILL SHOW YOUR BACKEND ERROR
     }
   };
 
   return (
-    <TeacherLayout title="Give Homework">
-      <form className="max-w-lg mx-auto bg-white p-6 m-6 rounded shadow" onSubmit={handleSubmit}>
+    <InstitutionLayout>
+      <div className="p-6 max-w-md mx-auto">
+        <h1 className="text-2xl font-bold mb-4 text-[#1fa2a6]">
+          Assign Teacher
+        </h1>
 
-        <h2 className="text-xl font-bold mb-4 text-[#1fa2a6]">
-          Assign Homework
-        </h2>
-
-        {/* ✅ CLASS */}
-        <label className="block mb-1">Class</label>
-        <select
-          className="w-full border p-2 mb-3"
-          value={className}
-          onChange={(e) => handleClassChange(e.target.value)}
-        >
-          <option value="">Select Class</option>
-          {classes.map((cls) => (
-            <option key={cls} value={cls}>{cls}</option>
-          ))}
-        </select>
-
-        {/* ✅ SECTION */}
-        {sections.length > 0 && (
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
           <>
-            <label className="block mb-1">Section</label>
+            {/* ✅ Dropdown */}
             <select
-              className="w-full border p-2 mb-3"
-              value={section}
-              onChange={(e) => handleSectionChange(e.target.value)}
+              className="w-full p-2 border rounded mb-4"
+              value={selectedTeacher}
+              onChange={(e) => setSelectedTeacher(e.target.value)}
             >
-              <option value="">Select Section</option>
-              {sections.map((sec) => (
-                <option key={sec} value={sec}>{sec}</option>
+              <option value="">Select Teacher</option>
+              {teachers.map((teacher) => (
+                <option key={teacher._id} value={teacher._id}>
+                  {teacher.name} ({teacher.subject})
+                </option>
               ))}
             </select>
-          </>
-        )}
 
-        {/* ✅ SUBJECT */}
-        {subjects.length > 0 && (
-          <>
-            <label className="block mb-1">Subject</label>
-            <select
-              className="w-full border p-2 mb-3"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
+            {/* ✅ Button */}
+            <button
+              onClick={handleAssignTeacher}
+              className="w-full bg-[#1fa2a6] text-white py-2 rounded"
             >
-              <option value="">Select Subject</option>
-              {subjects.map((sub) => (
-                <option key={sub} value={sub}>{sub}</option>
-              ))}
-            </select>
+              Assign Teacher
+            </button>
           </>
         )}
-
-        {/* ✅ DESCRIPTION */}
-        <label className="block mb-1">Homework</label>
-        <textarea
-          className="w-full border p-3 mb-3"
-          rows={4}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        {/* ✅ BUTTON */}
-        <button
-          type="submit"
-          className="w-full bg-[#1fa2a6] text-white py-2 rounded"
-        >
-          Assign Homework
-        </button>
-
-      </form>
-    </TeacherLayout>
+      </div>
+    </InstitutionLayout>
   );
 }

@@ -4,7 +4,6 @@ import TeacherLayout from "../layout/teacherdashboardlayout";
 import axios from "axios";
 
 export default function GiveHomework() {
-
   const [data, setData] = useState([]);
 
   const [className, setClassName] = useState("");
@@ -24,12 +23,16 @@ export default function GiveHomework() {
           { teacherId }
         );
 
-        const apiData = res.data.data;
+        const apiData = res.data.data || [];
+
+        console.log("🔥 API DATA:", apiData);
+
         setData(apiData);
 
+        // ✅ FIX: use classId.className
         const uniqueClasses = [
-          ...new Set(apiData.map(d => d.className))
-        ];
+          ...new Set(apiData.map(d => d.classId?.className))
+        ].filter(Boolean);
 
         setClasses(uniqueClasses);
 
@@ -41,31 +44,36 @@ export default function GiveHomework() {
     fetchData();
   }, []);
 
+  // ✅ HANDLE CLASS CHANGE
   const handleClassChange = (value) => {
     setClassName(value);
     setSection("");
     setSubject("");
   };
 
+  // ✅ HANDLE SECTION CHANGE
   const handleSectionChange = (value) => {
     setSection(value);
     setSubject("");
   };
 
+  // ✅ SECTIONS FILTER
   const sections = data
-    .filter(d => String(d.className) === String(className))
-    .map(d => d.section)
+    .filter(d => d.classId?.className === className)
+    .map(d => d.classId?.section)
     .filter((v, i, arr) => arr.indexOf(v) === i);
 
+  // ✅ SUBJECTS FILTER
   const subjects = data
     .filter(
       d =>
-        String(d.className) === String(className) &&
-        String(d.section) === String(section)
+        d.classId?.className === className &&
+        d.classId?.section === section
     )
-    .flatMap(d => d.subjects)
+    .map(d => d.subject)
     .filter((v, i, arr) => arr.indexOf(v) === i);
 
+  // ✅ SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -87,7 +95,7 @@ export default function GiveHomework() {
         institutionCode
       });
 
-      alert("Homework Assigned ✅");
+      alert("✅ Homework Assigned");
 
       setDescription("");
       setSubject("");
@@ -95,19 +103,22 @@ export default function GiveHomework() {
 
     } catch (error) {
       console.log(error);
-      alert("Error assigning homework");
+      alert(
+        error?.response?.data?.message || "Error assigning homework"
+      );
     }
   };
 
   return (
     <TeacherLayout title="Give Homework">
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white p-6 m-6 rounded shadow">
+      <form className="max-w-lg mx-auto bg-white p-6 m-6 rounded shadow" onSubmit={handleSubmit}>
 
         <h2 className="text-xl font-bold mb-4 text-[#1fa2a6]">
           Assign Homework
         </h2>
 
-        <label className='block mb-1'>Class</label>
+        {/* ✅ CLASS */}
+        <label className="block mb-1">Class</label>
         <select
           className="w-full border p-2 mb-3"
           value={className}
@@ -119,9 +130,10 @@ export default function GiveHomework() {
           ))}
         </select>
 
+        {/* ✅ SECTION */}
         {sections.length > 0 && (
           <>
-            <label className='block mb-1'>Section</label>
+            <label className="block mb-1">Section</label>
             <select
               className="w-full border p-2 mb-3"
               value={section}
@@ -135,9 +147,10 @@ export default function GiveHomework() {
           </>
         )}
 
+        {/* ✅ SUBJECT */}
         {subjects.length > 0 && (
           <>
-            <label className='block mb-1'>Subject</label>
+            <label className="block mb-1">Subject</label>
             <select
               className="w-full border p-2 mb-3"
               value={subject}
@@ -151,7 +164,8 @@ export default function GiveHomework() {
           </>
         )}
 
-        <label className='block mb-1'>Homework</label>
+        {/* ✅ DESCRIPTION */}
+        <label className="block mb-1">Homework</label>
         <textarea
           className="w-full border p-3 mb-3"
           rows={4}
@@ -159,6 +173,7 @@ export default function GiveHomework() {
           onChange={(e) => setDescription(e.target.value)}
         />
 
+        {/* ✅ BUTTON */}
         <button
           type="submit"
           className="w-full bg-[#1fa2a6] text-white py-2 rounded"
