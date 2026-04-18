@@ -56,7 +56,7 @@ export default function TeacherDashboard() {
         <div className="bg-gradient-to-r from-[#1fa2a6] to-blue-600 text-white p-6 rounded-2xl flex justify-between">
           <div>
             <h2 className="text-xl font-bold">
-              Welcome, {data.teacherName} 👋
+              Hii, {data.teacherName} 👋
             </h2>
             <p className="text-sm opacity-80 mt-1">
               Latest Result: {data.latestResult}
