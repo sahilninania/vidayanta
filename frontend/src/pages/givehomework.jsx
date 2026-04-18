@@ -25,13 +25,12 @@ export default function GiveHomework() {
 
         const apiData = res.data.data || [];
 
-        console.log("🔥 API DATA:", apiData);
+        console.log("API DATA 👉", apiData);
 
         setData(apiData);
 
-        // ✅ FIX: use classId.className
         const uniqueClasses = [
-          ...new Set(apiData.map(d => d.classId?.className))
+          ...new Set(apiData.map((d) => d.className))
         ].filter(Boolean);
 
         setClasses(uniqueClasses);
@@ -44,36 +43,31 @@ export default function GiveHomework() {
     fetchData();
   }, []);
 
-  // ✅ HANDLE CLASS CHANGE
   const handleClassChange = (value) => {
     setClassName(value);
     setSection("");
     setSubject("");
   };
 
-  // ✅ HANDLE SECTION CHANGE
   const handleSectionChange = (value) => {
     setSection(value);
     setSubject("");
   };
 
-  // ✅ SECTIONS FILTER
   const sections = data
-    .filter(d => d.classId?.className === className)
-    .map(d => d.classId?.section)
+    .filter((d) => d.className === className)
+    .map((d) => d.section)
     .filter((v, i, arr) => arr.indexOf(v) === i);
 
-  // ✅ SUBJECTS FILTER
   const subjects = data
     .filter(
-      d =>
-        d.classId?.className === className &&
-        d.classId?.section === section
+      (d) =>
+        d.className === className &&
+        d.section === section
     )
-    .map(d => d.subject)
+    .flatMap((d) => d.subjects || [])
     .filter((v, i, arr) => arr.indexOf(v) === i);
 
-  // ✅ SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -95,7 +89,7 @@ export default function GiveHomework() {
         institutionCode
       });
 
-      alert("✅ Homework Assigned");
+      alert("Homework Assigned");
 
       setDescription("");
       setSubject("");
@@ -103,9 +97,7 @@ export default function GiveHomework() {
 
     } catch (error) {
       console.log(error);
-      alert(
-        error?.response?.data?.message || "Error assigning homework"
-      );
+      alert(error?.response?.data?.message || "Error");
     }
   };
 
@@ -117,7 +109,6 @@ export default function GiveHomework() {
           Assign Homework
         </h2>
 
-        {/* ✅ CLASS */}
         <label className="block mb-1">Class</label>
         <select
           className="w-full border p-2 mb-3"
@@ -130,7 +121,6 @@ export default function GiveHomework() {
           ))}
         </select>
 
-        {/* ✅ SECTION */}
         {sections.length > 0 && (
           <>
             <label className="block mb-1">Section</label>
@@ -147,7 +137,6 @@ export default function GiveHomework() {
           </>
         )}
 
-        {/* ✅ SUBJECT */}
         {subjects.length > 0 && (
           <>
             <label className="block mb-1">Subject</label>
@@ -164,7 +153,6 @@ export default function GiveHomework() {
           </>
         )}
 
-        {/* ✅ DESCRIPTION */}
         <label className="block mb-1">Homework</label>
         <textarea
           className="w-full border p-3 mb-3"
@@ -173,7 +161,6 @@ export default function GiveHomework() {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        {/* ✅ BUTTON */}
         <button
           type="submit"
           className="w-full bg-[#1fa2a6] text-white py-2 rounded"
