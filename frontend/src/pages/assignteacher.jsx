@@ -6,97 +6,78 @@ import axios from "axios";
 export default function AssignedTeachers() {
   const [classes, setClasses] = useState([]);
   const [teachers, setTeachers] = useState([]);
-  const [formData, setFormData] = useState({}); // 🔥 per class form state
-  const [subjects, setSubjects] = useState({}); // 🔥 per class subjects
+  const [subjects, setSubjects] = useState([]);
+
+  const [selectedClassId, setSelectedClassId] = useState(null); // 🔥 KEY
+  const [form, setForm] = useState({
+    teacherId: "",
+    subject: ""
+  });
 
   const institutionCode = localStorage.getItem("institutionCode");
 
   // ✅ FETCH CLASSES
-  const fetchClasses = async () => {
-    const res = await axios.post(
-      `${API_URL}/api/classes/by-institution`,
-      { institutionCode }
-    );
-    setClasses(res.data.classes || []);
-  };
-
-  // ✅ FETCH TEACHERS
-  const fetchTeachers = async () => {
-    const res = await axios.get(
-      `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
-    );
-    setTeachers(res.data.teachers || []);
-  };
-
   useEffect(() => {
-      // ✅ FIX: async wrapper
-      const loadData = async () => {
-        await fetchClasses();
-        await fetchTeachers();
-      };
-  
-      loadData();
-    }, []);
+    const fetchClasses = async () => {
+      const res = await axios.post(
+        `${API_URL}/api/classes/by-institution`,
+        { institutionCode }
+      );
+      setClasses(res.data.classes || []);
+    };
 
-  // ✅ TEACHER CHANGE (per class)
-  const handleTeacherChange = (classId, teacherId) => {
+    const fetchTeachers = async () => {
+      const res = await axios.get(
+        `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
+      );
+      setTeachers(res.data.teachers || []);
+    };
+
+    fetchClasses();
+    fetchTeachers();
+  }, []);
+
+  // ✅ TEACHER CHANGE
+  const handleTeacherChange = (teacherId) => {
     const teacher = teachers.find(t => t._id === teacherId);
 
-    setSubjects(prev => ({
-      ...prev,
-      [classId]: teacher?.subjects || []
-    }));
+    setSubjects(teacher?.subjects || []);
 
-    setFormData(prev => ({
-      ...prev,
-      [classId]: {
-        ...prev[classId],
-        teacherId,
-        subject: ""
-      }
-    }));
+    setForm({
+      teacherId,
+      subject: ""
+    });
   };
 
   // ✅ SUBJECT CHANGE
-  const handleSubjectChange = (classId, subject) => {
-    setFormData(prev => ({
+  const handleSubjectChange = (subject) => {
+    setForm(prev => ({
       ...prev,
-      [classId]: {
-        ...prev[classId],
-        subject
-      }
+      subject
     }));
   };
 
-  // ✅ SUBMIT
-  const handleAssign = async (classId) => {
-    const data = formData[classId];
-
-    if (!data?.teacherId || !data?.subject) {
+  // ✅ ASSIGN
+  const handleAssign = async () => {
+    if (!form.teacherId || !form.subject) {
       alert("Select teacher & subject");
       return;
     }
 
     try {
       await axios.post(`${API_URL}/api/assign`, {
-        classId,
-        teacherId: data.teacherId,
-        subject: data.subject,
+        classId: selectedClassId,
+        teacherId: form.teacherId,
+        subject: form.subject,
         institutionCode
       });
 
       alert("Assigned ✅");
 
-      // reset only this class
-      setFormData(prev => ({
-        ...prev,
-        [classId]: { teacherId: "", subject: "" }
-      }));
-
-      setSubjects(prev => ({
-        ...prev,
-        [classId]: []
-      }));
+      // reset
+      setSelectedClassId(null);
+      setForm({ teacherId: "", subject: "" });
+      setSubjects([]);
 
     } catch (err) {
       alert(err?.response?.data?.message || "Error");
@@ -116,50 +97,74 @@ export default function AssignedTeachers() {
           {classes.map(cls => (
             <div key={cls._id} className="p-4 border rounded shadow">
 
-              {/* ✅ PREFILLED CLASS */}
               <h2 className="font-bold text-lg mb-2">
                 Class {cls.className} - {cls.section}
               </h2>
 
-              {/* TEACHER DROPDOWN */}
-              <select
-                className="border p-2 w-full mb-2"
-                value={formData[cls._id]?.teacherId || ""}
-                onChange={(e) =>
-                  handleTeacherChange(cls._id, e.target.value)
-                }
-              >
-                <option value="">Select Teacher</option>
-                {teachers.map(t => (
-                  <option key={t._id} value={t._id}>
-                    {t.teacherName}
-                  </option>
-                ))}
-              </select>
+              {/* 🔥 BUTTON */}
+              {selectedClassId !== cls._id && (
+                <button
+                  onClick={() => setSelectedClassId(cls._id)}
+                  className="bg-[#1fa2a6] text-white px-3 py-1 rounded"
+                >
+                  Assign Teacher
+                </button>
+              )}
 
-              {/* SUBJECT DROPDOWN */}
-              <select
-                className="border p-2 w-full mb-2"
-                value={formData[cls._id]?.subject || ""}
-                onChange={(e) =>
-                  handleSubjectChange(cls._id, e.target.value)
-                }
-                disabled={!subjects[cls._id]?.length}
-              >
-                <option value="">Select Subject</option>
-                {(subjects[cls._id] || []).map(sub => (
-                  <option key={sub} value={sub}>
-                    {sub}
-                  </option>
-                ))}
-              </select>
+              {/* 🔥 FORM ONLY FOR SELECTED CLASS */}
+              {selectedClassId === cls._id && (
+                <div className="mt-3">
 
-              <button
-                onClick={() => handleAssign(cls._id)}
-                className="bg-[#1fa2a6] text-white px-3 py-1 rounded w-full"
-              >
-                Assign
-              </button>
+                  {/* TEACHER */}
+                  <select
+                    className="border p-2 w-full mb-2"
+                    value={form.teacherId}
+                    onChange={(e) =>
+                      handleTeacherChange(e.target.value)
+                    }
+                  >
+                    <option value="">Select Teacher</option>
+                    {teachers.map(t => (
+                      <option key={t._id} value={t._id}>
+                        {t.teacherName}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* SUBJECT */}
+                  <select
+                    className="border p-2 w-full mb-2"
+                    value={form.subject}
+                    onChange={(e) =>
+                      handleSubjectChange(e.target.value)
+                    }
+                    disabled={!subjects.length}
+                  >
+                    <option value="">Select Subject</option>
+                    {subjects.map(sub => (
+                      <option key={sub} value={sub}>
+                        {sub}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* ACTION BUTTONS */}
+                  <button
+                    onClick={handleAssign}
+                    className="bg-green-600 text-white px-3 py-1 rounded mr-2"
+                  >
+                    Save
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedClassId(null)}
+                    className="bg-gray-400 text-white px-3 py-1 rounded"
+                  >
+                    Cancel
+                  </button>
+
+                </div>
+              )}
 
             </div>
           ))}
