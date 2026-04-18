@@ -9,7 +9,6 @@ export default function AssignTeacher() {
   const navigate = useNavigate();
 
   const [teachers, setTeachers] = useState([]);
-  const [assignments, setAssignments] = useState([]);
   const [selectedTeacher, setSelectedTeacher] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -27,23 +26,12 @@ export default function AssignTeacher() {
     }
   };
 
-  // ✅ Fetch Assignments (to check if teacher already used)
-  const fetchAssignments = async () => {
-    try {
-      const res = await axios.get(
-        `${API_URL}/api/assignments?institutionCode=${institutionCode}`
-      );
-      setAssignments(res.data.assignments || []);
-    } catch (err) {
-      console.error("Error fetching assignments", err);
-    }
-  };
-
+  // ✅ Load Teachers
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        await Promise.all([fetchTeachers(), fetchAssignments()]);
+        await fetchTeachers();
       } catch (err) {
         console.error(err);
       } finally {
@@ -54,20 +42,10 @@ export default function AssignTeacher() {
     loadData();
   }, []);
 
-  // ✅ Handle Assign
+  // ✅ HANDLE ASSIGN (FINAL FIX)
   const handleAssignTeacher = async () => {
     if (!selectedTeacher) {
       alert("Please select a teacher");
-      return;
-    }
-
-    // 🔥 FRONTEND CHECK (teacher already used)
-    const isTeacherUsed = assignments.some(
-      (a) => a.teacherId?._id === selectedTeacher
-    );
-
-    if (isTeacherUsed) {
-      alert("❌ This teacher is already assigned to another class!");
       return;
     }
 
@@ -82,12 +60,14 @@ export default function AssignTeacher() {
       navigate("/institution/assign-class");
 
     } catch (error) {
-      console.error("❌ ERROR 👉", error.response?.data);
+      console.log("🔥 FULL ERROR:", error);
 
-      // 🔥 IMPORTANT FIX (your missing part)
-      alert(
-        error.response?.data?.message || "Something went wrong"
-      );
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong";
+
+      alert(message); // 🔥 THIS WILL SHOW YOUR BACKEND ERROR
     }
   };
 
