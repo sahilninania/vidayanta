@@ -91,7 +91,7 @@ export default function AssignTeacher() {
               <option value="">Select Teacher</option>
               {teachers.map((teacher) => (
                 <option key={teacher._id} value={teacher._id}>
-                  {teacher.name} ({teacher.subject})
+                    {teacher.teacherName} ({teacher.subjects?.[0]})
                 </option>
               ))}
             </select>
