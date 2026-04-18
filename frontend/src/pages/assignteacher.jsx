@@ -8,7 +8,6 @@ export default function AssignTeacher() {
   const { id } = useParams();
 
   const [teachers, setTeachers] = useState([]);
-  const [_selectedTeacher, setSelectedTeacher] = useState(null);
   const [subjects, setSubjects] = useState([]);
 
   const [form, setForm] = useState({
@@ -21,38 +20,43 @@ export default function AssignTeacher() {
   // ✅ FETCH TEACHERS
   useEffect(() => {
     const fetchTeachers = async () => {
-      const res = await axios.get(
-        `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
-      );
+      try {
+        const res = await axios.get(
+          `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
+        );
 
-      setTeachers(res.data.teachers);
+        setTeachers(res.data.teachers || []);
+      } catch (err) {
+        console.error("Error fetching teachers", err);
+      }
     };
 
     fetchTeachers();
   }, []);
 
-  // ✅ HANDLE TEACHER CHANGE
+  // ✅ TEACHER CHANGE
   const handleTeacherChange = (e) => {
     const teacherId = e.target.value;
 
-    const teacher = teachers.find(t => t._id === teacherId);
+    const teacher = teachers.find((t) => t._id === teacherId);
 
-    setSelectedTeacher(teacher);
     setSubjects(teacher?.subjects || []);
 
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       teacherId,
-      subject: "" // reset subject
-    });
+      subject: ""
+    }));
   };
 
-  // ✅ HANDLE SUBJECT CHANGE
+  // ✅ SUBJECT CHANGE
   const handleSubjectChange = (e) => {
-    setForm({
-      ...form,
-      subject: e.target.value
-    });
+    const subject = e.target.value;
+
+    setForm((prev) => ({
+      ...prev,
+      subject
+    }));
   };
 
   // ✅ SUBMIT
@@ -64,70 +68,73 @@ export default function AssignTeacher() {
       return;
     }
 
-    await axios.post(`${API_URL}/api/classes/assign`, {
-      classId: id,
-      teacherId: form.teacherId,
-      subject: form.subject
-    });
+    try {
+      await axios.post(`${API_URL}/api/assign`, {
+        classId: id,
+        teacherId: form.teacherId,
+        subject: form.subject,
+        institutionCode
+      });
 
-    alert("Teacher Assigned ✅");
+      alert("Teacher Assigned ✅");
 
-    // reset
-    setForm({ teacherId: "", subject: "" });
-    setSubjects([]);
+      setForm({ teacherId: "", subject: "" });
+      setSubjects([]);
+
+    } catch (err) {
+      alert(err?.response?.data?.message || "Error assigning");
+    }
   };
 
   return (
     <InstitutionLayout title="Assign Teacher">
-      
-    <div className=" max-w-md mx-auto bg-white shadow rounded p-6 ">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#1fa2a6] mb-1 text-center md:text-left">
-              Vidayanta
-            </h2>
-      <h1 className="text-xl font-bold mb-4 text-[#1fa2a6]">Assign Teacher</h1>
+      <div className="max-w-md mx-auto bg-white shadow rounded p-6">
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+        <h1 className="text-xl font-bold mb-4 text-[#1fa2a6]">
+          Assign Teacher
+        </h1>
 
-        {/* ✅ TEACHER DROPDOWN */}
-        <label className='block mb-1'>Subject Teacher</label>
-        <select
-          value={form.teacherId}
-          onChange={handleTeacherChange}
-          className="border p-2 w-full rounded"
-        >
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-          <option value="">Select Teacher</option>
+          {/* ✅ TEACHER */}
+          <label>Teacher</label>
+          <select
+            value={form.teacherId}
+            onChange={handleTeacherChange}
+            className="border p-2 w-full rounded"
+          >
+            <option value="">Select Teacher</option>
 
-          {teachers.map((t) => (
-            <option key={t._id} value={t._id}>
-              {t.teacherName}
-            </option>
-          ))}
-        </select>
+            {teachers.map((t) => (
+              <option key={t._id} value={t._id}>
+                {t.teacherName}
+              </option>
+            ))}
+          </select>
 
-        {/* ✅ SUBJECT DROPDOWN */}
-        <label className='block mb-1'>Subject</label>
-        <select
-          value={form.subject}
-          onChange={handleSubjectChange}
-          className="border p-2 w-full rounded"
-          disabled={!subjects.length}
-        >
-          <option value="">Select Subject</option>
+          {/* ✅ SUBJECT */}
+          <label>Subject</label>
+          <select
+            value={form.subject}
+            onChange={handleSubjectChange}
+            className="border p-2 w-full rounded"
+            disabled={!subjects.length}
+          >
+            <option value="">Select Subject</option>
 
-          {subjects.map((sub) => (
-            <option key={sub} value={sub}>
-              {sub}
-            </option>
-          ))}
-        </select>
+            {subjects.map((sub) => (
+              <option key={sub} value={sub}>
+                {sub}
+              </option>
+            ))}
+          </select>
 
-        <button className="bg-[#1fa2a6] text-white px-3 py-2 rounded w-full">
-          Assign
-        </button>
+          <button className="bg-[#1fa2a6] text-white px-3 py-2 rounded w-full">
+            Assign Teacher
+          </button>
 
-      </form>
-    </div>
+        </form>
+      </div>
     </InstitutionLayout>
   );
 }
