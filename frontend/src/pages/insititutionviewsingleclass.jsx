@@ -15,8 +15,9 @@ export default function ViewSingleClass() {
     const fetchClass = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/classes/${id}`);
-        setData(res.data.data || null);
+       setData(res.data.data || res.data.class || res.data || null);
         console.log("FULL DATA 👉", data);
+        console.log("API RESPONSE 👉", res.data);
       } catch (err) {
         console.error("Fetch class error 👉", err);
       }
