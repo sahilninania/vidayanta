@@ -18,7 +18,7 @@ export default function AssignTeacher() {
   const fetchTeachers = async () => {
     try {
       const res = await axios.get(
-        `${API_URL}/api/teachers?institutionCode=${institutionCode}`
+        `${API_URL}/api/teachers/by-institution?institutionCode=${institutionCode}`
       );
       setTeachers(res.data.teachers || []);
     } catch (err) {
