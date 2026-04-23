@@ -94,6 +94,7 @@ export const getAllTeachers = async (req, res) => {
   try {
     const { institutionCode } = req.query;
 
+    console.log("🔥 API HIT");
     console.log("institutionCode 👉", institutionCode);
 
     if (!institutionCode) {
@@ -102,19 +103,23 @@ export const getAllTeachers = async (req, res) => {
       });
     }
 
-    const teachers = await Teacher.find({
-      institutionCode
-    }).select("_id teacherName");
+    // ✅ SAFE QUERY (no filter first)
+    const teachers = await Teacher.find().select("_id teacherName institutionCode");
 
-    console.log("teachers 👉", teachers);
+    console.log("DB DATA 👉", teachers);
+
+    // ✅ FILTER MANUALLY (to avoid crash)
+    const filtered = teachers.filter(
+      t => t.institutionCode === institutionCode
+    );
 
     res.json({
       success: true,
-      data: teachers
+      data: filtered
     });
 
   } catch (error) {
-    console.log("🔥 ERROR:", error);
+    console.log("🔥 FULL ERROR:", error); // 👈 THIS WILL SHOW REAL ISSUE
     res.status(500).json({
       message: error.message
     });
