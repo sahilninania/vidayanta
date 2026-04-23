@@ -88,7 +88,7 @@ useEffect(() => {
           </div>
         
           {/* MESSAGE */}
-          <p className="text-sm mt-2 text-gray-600">
+          <p className="text-sm mt-2 text-gray-600  whitespace-pre-line">
             {a.message}
           </p>
           <div className="flex justify-between items-center mt-3">

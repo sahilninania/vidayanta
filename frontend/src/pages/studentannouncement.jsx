@@ -61,7 +61,7 @@ export default function StudentAnnouncement() {
                     {item.title}
                   </h2>
 
-                  <p className="text-gray-700 mt-2">
+                  <p className="text-gray-700 mt-2  whitespace-pre-line">
                     {item.message || "No description"}
                   </p>
 
