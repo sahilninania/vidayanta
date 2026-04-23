@@ -5,9 +5,10 @@ import {
   updateTeacher,
   deleteTeacher,
   getSingleTeacher,
-  
+  getAllTeachers 
 } from "../controllers/createteacher.js";
 import { emailLimiter } from "../middlerwars/ratelimter.js";
+
 const router = express.Router();
 
 router.post("/create",emailLimiter, createTeacher);  
@@ -16,4 +17,5 @@ router.post("/by-institution",emailLimiter, getTeacherByInstitution); // ✅
 router.put("/:id",emailLimiter, updateTeacher);
 router.delete("/:id",deleteTeacher);
 router.get("/:id", getSingleTeacher); 
+router.get("/all", getAllTeachers); // ✅ ADD THIS
 export default router;
