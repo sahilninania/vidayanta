@@ -23,18 +23,26 @@ export default function CreateAnnouncement() {
   const institutionCode = localStorage.getItem("institutionCode");
   const userId = localStorage.getItem("userId");
 
+  // ✅ LOAD CLASSES
   useEffect(() => {
     axios.get(
       `${API_URL}/api/classes/institution-classes?institutionCode=${institutionCode}`
     ).then(res => setClasses(res.data.data));
   }, []);
 
+  // ✅ LOAD ALL TEACHERS (for specific teacher)
+  useEffect(() => {
+    if (form.targetType === "teacher") {
+      axios.get(`${API_URL}/api/teachers/all?institutionCode=${institutionCode}`)
+        .then(res => setTeachers(res.data.data));
+    }
+  }, [form.targetType]);
+
   const handleClassChange = (cls) => {
-    setForm((prev) => ({
+    setForm(prev => ({
       ...prev,
       className: cls,
       section: "",
-      teacherId: "",
       studentId: ""
     }));
 
@@ -43,20 +51,32 @@ export default function CreateAnnouncement() {
   };
 
   const handleSectionChange = async (sec, cls) => {
-    setForm((prev) => ({
-      ...prev,
-      section: sec
-    }));
+    setForm(prev => ({ ...prev, section: sec }));
 
-    const tRes = await axios.get(
-      `${API_URL}/api/teachers/by-class?className=${cls}&section=${sec}&institutionCode=${institutionCode}`
-    );
-    setTeachers(tRes.data.data);
+    // students for specific student
+    if (form.targetType === "student") {
+      const res = await axios.get(
+        `${API_URL}/api/classes/students-by-class?className=${cls}&section=${sec}&institutionCode=${institutionCode}`
+      );
+      setStudents(res.data.data);
+    }
+  };
 
-    const sRes = await axios.get(
-      `${API_URL}/api/classes/students-by-class?className=${cls}&section=${sec}&institutionCode=${institutionCode}`
-    );
-    setStudents(sRes.data.data);
+  // ✅ RESET ON TYPE CHANGE
+  const handleTargetChange = (value) => {
+    setForm({
+      title: form.title,
+      message: form.message,
+      targetType: value,
+      className: "",
+      section: "",
+      teacherId: "",
+      studentId: ""
+    });
+
+    setSections([]);
+    setTeachers([]);
+    setStudents([]);
   };
 
   const handleSubmit = async (e) => {
@@ -68,7 +88,7 @@ export default function CreateAnnouncement() {
         return;
       }
 
-      await axios.post(`${API_URL}/api/announcement/create `, {
+      await axios.post(`${API_URL}/api/announcement/create`, {
         ...form,
         institutionCode,
         userId
@@ -96,7 +116,7 @@ export default function CreateAnnouncement() {
           placeholder="Title"
           className="border p-2 w-full mb-3 rounded"
           onChange={(e) =>
-            setForm((prev) => ({ ...prev, title: e.target.value }))
+            setForm(prev => ({ ...prev, title: e.target.value }))
           }
         />
 
@@ -105,15 +125,15 @@ export default function CreateAnnouncement() {
           placeholder="Message"
           className="border p-2 w-full mb-3 rounded"
           onChange={(e) =>
-            setForm((prev) => ({ ...prev, message: e.target.value }))
+            setForm(prev => ({ ...prev, message: e.target.value }))
           }
         />
 
+        {/* TARGET */}
         <select
           className="border p-2 w-full mb-3 rounded"
-          onChange={(e) =>
-            setForm((prev) => ({ ...prev, targetType: e.target.value }))
-          }
+          value={form.targetType}
+          onChange={(e) => handleTargetChange(e.target.value)}
         >
           <option value="all">All</option>
           <option value="teachers">All Teachers</option>
@@ -123,35 +143,38 @@ export default function CreateAnnouncement() {
           <option value="student">Specific Student</option>
         </select>
 
-        {(form.targetType !== "all") && (
+        {/* CLASS (only class + student) */}
+        {["class", "student"].includes(form.targetType) && (
           <select
             className="border p-2 w-full mb-2 rounded"
             onChange={(e) => handleClassChange(e.target.value)}
           >
             <option>Select Class</option>
-            {[...new Set(classes.map(c => c.className))].map((cls) => (
+            {[...new Set(classes.map(c => c.className))].map(cls => (
               <option key={cls}>{cls}</option>
             ))}
           </select>
         )}
 
+        {/* SECTION */}
         {sections.length > 0 && (
           <select
             className="border p-2 w-full mb-3 rounded"
             onChange={(e) => handleSectionChange(e.target.value, form.className)}
           >
             <option>Select Section</option>
-            {sections.map((sec) => (
+            {sections.map(sec => (
               <option key={sec}>{sec}</option>
             ))}
           </select>
         )}
 
+        {/* SPECIFIC TEACHER */}
         {form.targetType === "teacher" && (
           <select
             className="border p-2 w-full mb-3 rounded"
             onChange={(e) =>
-              setForm((prev) => ({ ...prev, teacherId: e.target.value }))
+              setForm(prev => ({ ...prev, teacherId: e.target.value }))
             }
           >
             <option>Select Teacher</option>
@@ -163,11 +186,12 @@ export default function CreateAnnouncement() {
           </select>
         )}
 
-        {form.targetType === "student" && (
+        {/* SPECIFIC STUDENT */}
+        {form.targetType === "student" && students.length > 0 && (
           <select
             className="border p-2 w-full mb-3 rounded"
             onChange={(e) =>
-              setForm((prev) => ({ ...prev, studentId: e.target.value }))
+              setForm(prev => ({ ...prev, studentId: e.target.value }))
             }
           >
             <option>Select Student</option>

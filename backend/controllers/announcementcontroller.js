@@ -137,40 +137,62 @@ export const deleteAnnouncement = async (req, res) => {
 // 🔥 GET (FIXED + OPTIMIZED)
 export const getAnnouncements = async (req, res) => {
   try {
-    const { role, institutionCode,  userId, className, section } = req.query;
+    const { role, institutionCode, userId, className, section } = req.query;
 
     let query = { institutionCode };
+
+    // ✅ ADMIN
     if (role === "instituteadmin") {
       query.createdBy = userId;
     }
+
+    // ✅ STUDENT
     if (role === "student") {
-  query.$or = [
+      query.$or = [
+        { targetType: "all" },
+        { targetType: "students" },
 
-    // ✅ institution announcements
-    { targetType: "all" },
+        {
+          targetType: "class",
+          className,
+          section
+        },
 
-    // ✅ CLASS MATCH (MOST IMPORTANT 🔥)
-    {
-      className: className,
-      section: section
-    },
+        {
+          targetType: "student",
+          studentId: userId
+        }
+      ];
+    }
 
-    // ✅ student specific
-    { targetType: "students" },
-    { targetType: "student" }
+    // ✅ TEACHER
+    if (role === "teacher") {
+      query.$or = [
+        { targetType: "all" },
+        { targetType: "teachers" },
 
-  ];
-}
+        {
+          targetType: "class",
+          className,
+          section
+        },
+
+        {
+          targetType: "teacher",
+          teacherId: userId
+        }
+      ];
+    }
 
     const data = await Announcement.find(query)
       .sort({ createdAt: -1 })
       .lean();
-    // console.log("ALL DATA 👉", data);
+
     return res.json({ success: true, data });
-    
+
   } catch (error) {
-    console.error("Fetch Error:", error.message);
-    return res.status(500).json({ message: "Server error" });
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
