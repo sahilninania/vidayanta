@@ -92,14 +92,31 @@ export const createTeacher = async (req, res) => {
 };
 export const getAllTeachers = async (req, res) => {
   try {
-    const teachers = await Teacher.find().lean();
-    res.status(200).json({
+    const { institutionCode } = req.query;
+
+    console.log("institutionCode 👉", institutionCode);
+
+    if (!institutionCode) {
+      return res.status(400).json({
+        message: "institutionCode required"
+      });
+    }
+
+    const teachers = await Teacher.find({
+      institutionCode
+    }).select("_id teacherName");
+
+    console.log("teachers 👉", teachers);
+
+    res.json({
       success: true,
       data: teachers
     });
+
   } catch (error) {
+    console.log("🔥 ERROR:", error);
     res.status(500).json({
-      message: "Error fetching teachers"
+      message: error.message
     });
   }
 };
@@ -181,3 +198,4 @@ export const getSingleTeacher = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
