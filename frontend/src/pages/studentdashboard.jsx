@@ -141,7 +141,7 @@ export default function StudentDashboard() {
                     data.homework.map((h, i) => (
                       <div key={i} className="border-b pb-2 mb-2">
                         <p className="font-semibold text-blue-600">{h.subject}</p>
-                        <p className="text-sm text-gray-600">{h.description}</p>
+                        <p className="text-sm text-gray-600 whitespace-pre-line">{h.description}</p>
                       </div>
                     ))
                   ) : (

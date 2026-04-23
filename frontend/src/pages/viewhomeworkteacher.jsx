@@ -81,7 +81,7 @@ export default function ViewHomeworkTeacher() {
               <p className="font-semibold mb-2">{hw.subject}</p>
 
               <p className="text-sm text-gray-500 whitespace-pre-line">Homework</p>
-              <p className="mb-4">{hw.description}</p>
+              <p className="mb-4 whitespace-pre-line">{hw.description}</p>
 
               <div className="flex gap-2">
 

@@ -153,7 +153,7 @@ const Box = ({ title, items }) => (
           key={item._id || i}
           className="mb-3 p-3 bg-gray-50 rounded-lg border hover:shadow-sm"
         >
-          <p className="font-medium text-sm">
+          <p className="font-medium text-sm whitespace-pre-line">
             {item.title || item.homework || item.description || "No title"}
           </p>
 
