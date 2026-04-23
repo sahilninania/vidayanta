@@ -70,7 +70,7 @@ export default function StudentHomework() {
                     {items.map((hw, i) => (
                       <tr key={i} className="border-t">
                         <td className="p-2 border">{hw.subject}</td>
-                        <td className="p-2 border">{hw.description}</td>
+                        <td className="p-2 border whitespace-pre-line">{hw.description}</td>
                       </tr>
                     ))}
                   </tbody>
