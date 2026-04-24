@@ -42,7 +42,7 @@ export default function About() {
     <>
       <Navbar />
 
-      <section className="bg-gray-50 p-20 mt-14 ">
+      <section className="bg-gray-50 p-8 mt-14 ">
 
         {/* HEADER */}
         <div className="text-center mb-16">
@@ -55,7 +55,7 @@ export default function About() {
             designed for institutions, teachers and students.
           </p>
 
-          <div className="w-200 h-1 bg-teal-500 mx-auto mt-3 rounded"> </div>
+          <div className="w-100 h-1 bg-teal-500 mx-auto mt-3 rounded"> </div>
         </div>
 
         {/* IMAGE + TEXT */}
