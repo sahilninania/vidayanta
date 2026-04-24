@@ -40,12 +40,6 @@ export default function Blog1() {
               Explore Now →
             </a>
 
-            <a
-              href="/features"
-              className="border border-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-[#0f2942] transition"
-            >
-              View Features
-            </a>
           </div>
         </div>
       </div>
@@ -101,7 +95,7 @@ export default function Blog1() {
 
             <a
               href="/"
-              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition shadow-md"
+              className="inline-block bg-[#14b8a6] hover:bg-[#0d9488] text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition shadow-md"
             >
               Explore Vidayanta →
             </a>
