@@ -55,7 +55,7 @@ export default function About() {
             designed for institutions, teachers and students.
           </p>
 
-          <div className="w-20 h-1 bg-teal-500 mx-auto mt-3 rounded"></div>
+          <div className="w-200 h-1 bg-teal-500 mx-auto mt-3 rounded"> </div>
         </div>
 
         {/* IMAGE + TEXT */}
