@@ -99,6 +99,9 @@ export default function Blog1() {
             >
               Explore Vidayanta →
             </a>
+            <a href="/digital-school-management" className="bg-[#14b8a6] hover:bg-[#0d9488] text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition shadow-md">
+                Read: How to Manage School Digitally
+            </a>
           </div>
 
         </div>

@@ -73,6 +73,8 @@ import InstitutionDetails from "./pages/institutiondetails";
 import Analytics from "./pages/analytics"
 import TeacherEditAnnouncement from "./pages/teachereditannouncement"
 import Blog1 from "./pages/Blog1";
+import Blog2 from "./pages/Blog2";
+
 // import Superadminlayout from "../layout/superadmindashboardlayout";
 function App() {
   return (
@@ -148,6 +150,7 @@ function App() {
         <Route path="/superadmin/institution/:id" element={<InstitutionDetails />} />  
         <Route path="/teacher/announcement/edit/:id" element={<TeacherEditAnnouncement />}/>
         <Route path="/best-school-erp" element={<Blog1 />} />
+        <Route path="/digital-school-management" element={<Blog2 />} />
     </Routes>
   );
 }
