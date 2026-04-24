@@ -12,8 +12,10 @@ const routes = [
   "/login",
   "/about",
   "/contact",
-  "/features",
-  "/pricing"
+  "/pricing",
+  "/feedback",
+  "/reviews",
+  "request-demo",
 ];
 
 const generateSitemap = () => {

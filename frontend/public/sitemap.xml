@@ -18,11 +18,19 @@
       <priority>0.7</priority>
     </url>
     <url>
-      <loc>https://vidayanta.nsjbgroups.com/features</loc>
+      <loc>https://vidayanta.nsjbgroups.com/pricing</loc>
       <priority>0.7</priority>
     </url>
     <url>
-      <loc>https://vidayanta.nsjbgroups.com/pricing</loc>
+      <loc>https://vidayanta.nsjbgroups.com/feedback</loc>
+      <priority>0.7</priority>
+    </url>
+    <url>
+      <loc>https://vidayanta.nsjbgroups.com/reviews</loc>
+      <priority>0.7</priority>
+    </url>
+    <url>
+      <loc>https://vidayanta.nsjbgroups.comrequest-demo</loc>
       <priority>0.7</priority>
     </url>
 </urlset>
