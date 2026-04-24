@@ -88,7 +88,7 @@ export default function Blog1() {
           </div>
 
           {/* CTA */}
-          <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="text-center mt-10 flex flex-row sm:flex-row gap-4 justify-center">
             <p className="text-gray-800 mb-4 font-medium text-lg">
               Ready to digitize your school?
             </p>
