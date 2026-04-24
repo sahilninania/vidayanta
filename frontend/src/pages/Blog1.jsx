@@ -7,15 +7,47 @@ export default function Blog1() {
     <>
       <Navbar />
 
-      {/* HERO SECTION */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Best School ERP System in India
-        </h1>
-        <p className="text-lg md:text-xl max-w-2xl mx-auto">
-          Discover how Vidayanta helps schools manage everything digitally with
-          ease and efficiency.
-        </p>
+      {/* PREMIUM HERO SECTION */}
+      <div className="relative bg-gradient-to-br from-[#0f2942] via-[#184b7a] to-[#159196] text-white py-20 px-6 text-center overflow-hidden">
+
+        {/* Glow Effect */}
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,white,transparent)]"></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto">
+
+          {/* Badge */}
+          <span className="inline-block bg-white/10 backdrop-blur px-4 py-1 rounded-full text-sm mb-4">
+            🚀 School ERP Solution
+          </span>
+
+          {/* Heading */}
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            Best School ERP System in India
+          </h1>
+
+          {/* Subheading */}
+          <p className="text-lg md:text-xl text-gray-200 mb-8">
+            Manage students, teachers, attendance and operations seamlessly with
+            <span className="font-semibold text-white"> Vidayanta</span>.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/"
+              className="bg-white text-[#0f2942] px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition shadow-lg"
+            >
+              Explore Now →
+            </a>
+
+            <a
+              href="/features"
+              className="border border-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-[#0f2942] transition"
+            >
+              View Features
+            </a>
+          </div>
+        </div>
       </div>
 
       {/* BLOG CONTENT */}
@@ -61,7 +93,7 @@ export default function Blog1() {
             </p>
           </div>
 
-          {/* CTA SECTION */}
+          {/* CTA */}
           <div className="text-center mt-10">
             <p className="text-gray-800 mb-4 font-medium text-lg">
               Ready to digitize your school?
