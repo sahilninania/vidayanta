@@ -16,6 +16,7 @@ const routes = [
   "/feedback",
   "/reviews",
   "request-demo",
+  "/best-school-erp"
 ];
 
 const generateSitemap = () => {
