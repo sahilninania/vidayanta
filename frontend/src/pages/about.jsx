@@ -29,7 +29,7 @@ export default function About() {
       <Navbar />
 
       {/* HERO */}
-      <div className="bg-gradient-to-br from-[#0f2942] via-[#184b7a] to-[#159196] text-white py-20 px-6 text-center mt-14">
+      <div className=" text-white py-20 px-6 text-center mt-14">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           About Vidayanta
         </h1>
