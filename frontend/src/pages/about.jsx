@@ -6,22 +6,21 @@ import { useMemo } from "react";
 export default function About() {
   const navigate = useNavigate();
 
-  // ✅ reusable cards (clean + scalable)
   const features = useMemo(() => [
     {
       icon: "⚡",
       title: "Fast & Reliable",
-      desc: "Built with modern technologies for fast and secure performance.",
+      desc: "Modern school ERP system built for speed, security and performance.",
     },
     {
       icon: "📊",
       title: "Smart Analytics",
-      desc: "Track student performance and institution growth easily.",
+      desc: "Track student performance, attendance and institution growth easily.",
     },
     {
       icon: "🎓",
       title: "Better Learning",
-      desc: "Improve collaboration between teachers and students.",
+      desc: "Improve collaboration between teachers and students digitally.",
     },
   ], []);
 
@@ -29,20 +28,18 @@ export default function About() {
     <>
       <Navbar />
 
-      <section className="bg-gray-50 py-20 mt-14">
+      {/* HERO */}
+      <div className="bg-gradient-to-br from-[#0f2942] via-[#184b7a] to-[#159196] text-white py-20 px-6 text-center mt-14">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          About Vidayanta
+        </h1>
+        <p className="text-lg max-w-2xl mx-auto text-gray-200">
+          Vidayanta is a modern school management ERP system developed by NSJB Groups,
+          designed to simplify education management digitally.
+        </p>
+      </div>
 
-        {/* HEADER */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-800">
-            About Vidayanta
-          </h2>
-
-          <p className="text-gray-600 mt-2">
-            A modern School ERP platform designed for institutions, teachers and students.
-          </p>
-
-          <div className="w-20 h-1 bg-teal-500 mx-auto mt-3 rounded"></div>
-        </div>
+      <section className="bg-gray-50 py-16">
 
         {/* IMAGE + TEXT */}
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center px-6">
@@ -50,23 +47,24 @@ export default function About() {
           <img
             src="/images/vidayanta (7).png"
             loading="lazy"
-            alt="About Vidayanta"
-            className="rounded-xl shadow"
+            alt="Vidayanta School ERP System"
+            className="rounded-xl shadow-lg"
           />
 
           <div>
-            <h3 className="text-2xl font-bold text-gray-800">
-              Transforming Education Management
-            </h3>
+            <h2 className="text-2xl font-bold text-gray-800">
+              Transforming School Management Digitally
+            </h2>
 
             <p className="text-gray-600 mt-4 leading-relaxed">
-              Vidayanta is a powerful School ERP platform designed to simplify the management of institutions.
-              Our system helps institutions manage teachers, students, attendance, performance and reports
-              through a centralized dashboard.
+              Vidayanta is a powerful school management software that helps institutions
+              manage students, teachers, attendance and academic operations efficiently.
+              It is developed by NSJB Groups as a complete digital solution for schools.
             </p>
 
             <p className="text-gray-600 mt-3">
-              We aim to make education management easier, faster and more efficient using modern digital tools.
+              Our platform enables institutions to reduce paperwork and improve efficiency
+              through automation and real-time data management.
             </p>
           </div>
 
@@ -79,9 +77,9 @@ export default function About() {
             <h3 className="text-xl font-bold text-gray-800">
               🎯 Our Mission
             </h3>
-
             <p className="text-gray-600 mt-3">
-              To simplify education management by providing a secure and modern ERP platform for institutions.
+              To provide a smart and secure school ERP system that simplifies
+              education management for institutions.
             </p>
           </div>
 
@@ -89,9 +87,9 @@ export default function About() {
             <h3 className="text-xl font-bold text-gray-800">
               🚀 Our Vision
             </h3>
-
             <p className="text-gray-600 mt-3">
-              To become a trusted digital platform that helps institutions manage education efficiently across the world.
+              To become a leading school management software platform helping
+              institutions worldwide manage education digitally.
             </p>
           </div>
 
@@ -102,7 +100,6 @@ export default function About() {
           <h2 className="text-3xl font-bold text-gray-800">
             Why Choose Vidayanta
           </h2>
-
           <div className="w-20 h-1 bg-teal-500 mx-auto mt-3 rounded"></div>
         </div>
 
@@ -113,38 +110,30 @@ export default function About() {
               key={f.title}
               className="bg-white p-6 rounded-xl shadow text-center hover:shadow-lg transition duration-300"
             >
-
               <div className="text-4xl mb-3">{f.icon}</div>
-
-              <h3 className="font-bold text-lg">
-                {f.title}
-              </h3>
-
-              <p className="text-gray-600 text-sm mt-2">
-                {f.desc}
-              </p>
-
+              <h3 className="font-bold text-lg">{f.title}</h3>
+              <p className="text-gray-600 text-sm mt-2">{f.desc}</p>
             </div>
           ))}
 
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-20">
+        {/* PREMIUM CTA */}
+        <div className="mt-20 max-w-4xl mx-auto text-center bg-gradient-to-r from-[#0f2942] via-[#184b7a] to-[#159196] text-white p-10 rounded-2xl shadow-lg">
 
-          <h2 className="text-2xl font-bold text-gray-800">
-            Start Managing Your Institution Smarter
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">
+            Start Managing Your School Smarter
           </h2>
 
-          <p className="text-gray-600 mt-2">
-            Join hundreds of institutions using Vidayanta.
+          <p className="text-gray-200 mb-6">
+            Join institutions using Vidayanta to simplify school management.
           </p>
 
           <button
             onClick={() => navigate("/request-demo")}
-            className="mt-6 bg-teal-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-teal-600 transition"
+            className="bg-white text-[#0f2942] px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition"
           >
-            Request Demo
+            🚀 Request Demo
           </button>
 
         </div>
