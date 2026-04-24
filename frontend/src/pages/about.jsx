@@ -42,7 +42,7 @@ export default function About() {
     <>
       <Navbar />
 
-      <section className="bg-gray-50 py-20 mt-14 p-6">
+      <section className="bg-gray-50 p-20 mt-14 ">
 
         {/* HEADER */}
         <div className="text-center mb-16">
