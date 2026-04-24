@@ -46,7 +46,7 @@ export default function Blog2() {
             making administration simple and efficient.
           </p>
 
-          <div className="text-center">
+          <div className="text-center flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/"
               className="bg-[#14b8a6] hover:bg-[#0d9488] text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
