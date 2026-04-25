@@ -40,9 +40,9 @@ export default function Features() {
     <section id="features" className="bg-gray-50 scroll-mt-24">
 
       <div className="text-center mb-16">
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h2 className="text-3xl font-bold text-gray-800">
           Powerful Features
-        </h1>
+        </h2>
 
         <div className="w-80 h-1 bg-teal-500 mx-auto mt-4 rounded"></div>
 

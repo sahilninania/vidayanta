@@ -33,10 +33,10 @@ export default function Hero() {
         <div className="max-w-xl text-center md:text-left">
 
           <h1 className="text-2xl md:text-5xl font-bold leading-tight mb-6">
-            Empowering Education,
+            Vidayanta ERP - Smart School Management System
             <br />
             <span className="text-[#2dd4bf]">
-              Simplifying Management
+              Empowering Education, Simplifying Management
             </span>
           </h1>
 
@@ -84,7 +84,7 @@ export default function Hero() {
         <div className="w-full max-w-sm md:max-w-md">
           <img
             src={images[current]}
-            alt="Vidayanta Dashboard"
+            alt="Vidayanta ERP School Management Dashboard" 
             // loading="lazy" // ✅ performance boost
             className="w-full rounded-xl shadow-xl transition duration-700"
           />
