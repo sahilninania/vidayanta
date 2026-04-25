@@ -46,7 +46,7 @@ export default function Navbar() {
       <nav className="fixed top-0 z-50 bg-[#0f2942]/90 backdrop-blur-md text-white px-6 py-3 flex justify-between items-center shadow-md w-full">
 
         {/* LEFT */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3" aria-label="Open Menu">
           <button
             onClick={() => setMenu(true)}
             className="text-2xl md:hidden"
