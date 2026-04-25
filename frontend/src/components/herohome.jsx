@@ -36,7 +36,8 @@ export default function Hero() {
             Vidayanta ERP - Smart School Management System
             <br />
             <span className="text-[#2dd4bf]">
-              Empowering Education, Simplifying Management
+              Empowering Education, <br/>
+              Simplifying Management
             </span>
           </h1>
 
