@@ -115,7 +115,7 @@ export default function Login() {
           <div className="hidden md:flex md:w-1/2 bg-[#e6f7f7] items-center justify-center">
             <div className="text-center p-6">
               <img
-                src="/images/institutioncreation.jpeg"
+                src="/images/institutioncreation.webp"
                 alt="institution"
                 loading="lazy" // ✅ performance boost
                 className="w-full max-w-sm rounded-xl shadow-md"
