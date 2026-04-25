@@ -32,7 +32,7 @@ export default function Hero() {
         {/* LEFT */}
         <div className="max-w-xl text-center md:text-left">
 
-          <h1 className="text-2xl md:text-5xl font-bold leading-tight mb-6">
+          <h1 className="text-xl md:text-3xl font-bold leading-tight mb-6">
             Vidayanta ERP - Smart School Management System
             <br />
             <span className="text-[#2dd4bf]">
