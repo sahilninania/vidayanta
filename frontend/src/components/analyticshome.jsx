@@ -4,9 +4,9 @@ export default function Analytics() {
 
   // ✅ stable array (performance boost)
   const images = useMemo(() => [
-    "/images/vidayanta (1).png",
-    "/images/vidayanta (4).png",
-    "/images/vidayanta (5).png",
+    "/images/vidayanta (1).webp",
+    "/images/vidayanta (4).webp",
+    "/images/vidayanta (5).webp",
   ], []);
 
   const [current, setCurrent] = useState(0);

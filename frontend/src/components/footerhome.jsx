@@ -20,7 +20,7 @@ export default function Footer() {
             <div className="flex justify-center md:justify-start items-center gap-2 mb-3">
               
               <img
-                src="/images/logo.png"
+                src="/images/logo (1).webp"
                 alt="Vidayanta Logo"
                 loading="lazy" // ✅ performance
                 className="w-20 md:w-24"

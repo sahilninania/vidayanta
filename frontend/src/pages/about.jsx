@@ -62,7 +62,7 @@ export default function About() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center px-6">
 
           <img
-            src="/images/vidayanta (7).png"
+            src="/images/vidayanta (7).webp"
             loading="lazy"
             alt="Vidayanta School ERP System dashboard"
             className="rounded-xl shadow"

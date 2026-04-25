@@ -62,7 +62,7 @@ export default function SuperadminSidebar({ open, setOpen }) {
 
         {/* 🔥 Logo */}
         <div className="flex items-center gap-2 mb-4">
-          <img src="/images/logo.png" alt="logo" className="w-9 h-9" />
+          <img src="/images/logo (1).webp" alt="logo" className="w-9 h-9" />
           <h1 className="text-lg md:text-xl font-bold text-[#1fa2a6]">
             Vidayanta
           </h1>

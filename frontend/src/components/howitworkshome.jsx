@@ -6,7 +6,7 @@ export default function HowItWorks() {
   // ✅ stable data (no re-create)
   const steps = useMemo(() => [
     {
-      img: "/images/howitsworks (1).png",
+      img: "/images/howitsworks (1).webp",
       title: "Super Admin",
       points: [
         "Creates institutions",
@@ -15,7 +15,7 @@ export default function HowItWorks() {
       ],
     },
     {
-      img: "/images/howitsworks (2).png",
+      img: "/images/howitsworks (2).webp",
       title: "Institution",
       points: [
         "Creates institutions",
@@ -24,7 +24,7 @@ export default function HowItWorks() {
       ],
     },
     {
-      img: "/images/howitsworks (4).png",
+      img: "/images/howitsworks (4).webp",
       title: "Teacher",
       points: [
         "Creates institutions",
@@ -33,7 +33,7 @@ export default function HowItWorks() {
       ],
     },
     {
-      img: "/images/howitsworks (3).png",
+      img: "/images/howitsworks (3).webp",
       title: "Student",
       points: [
         "Creates institutions",

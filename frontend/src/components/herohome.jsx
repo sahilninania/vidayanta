@@ -6,11 +6,11 @@ export default function Hero() {
 
   // ✅ stable array (no re-create every render)
   const images = useMemo(() => [
-    "/images/vidayanta (7).png",
-    "/images/vidayanta (10).png",
-    "/images/vidayanta (12).png",
+    "/images/vidayanta (7).webp",
+    "/images/vidayanta (10).webp",
+    "/images/vidayanta (12).webp",
     "/images/vidayanta (15).png",
-    "/images/vidayanta (16).png"
+    "/images/vidayanta (16).webp"
   ], []);
 
   const [current, setCurrent] = useState(0);
@@ -85,7 +85,7 @@ export default function Hero() {
           <img
             src={images[current]}
             alt="Vidayanta Dashboard"
-            loading="lazy" // ✅ performance boost
+            // loading="lazy" // ✅ performance boost
             className="w-full rounded-xl shadow-xl transition duration-700"
           />
         </div>

@@ -5,22 +5,22 @@ export default function Stats() {
   // ✅ stable data (no re-create on every render)
   const stats = useMemo(() => [
     {
-      img: "/images/howitsworks (2).png",
+      img: "/images/howitsworks (2).webp",
       value: "250+",
       label: "Institutions",
     },
     {
-      img: "/images/howitsworks (4).png",
+      img: "/images/howitsworks (4).webp",
       value: "1200+",
       label: "Teachers",
     },
     {
-      img: "/images/howitsworks (3).png",
+      img: "/images/howitsworks (3).webp",
       value: "15000+",
       label: "Students",
     },
     {
-      img: "/images/howitsworks (1).png",
+      img: "/images/howitsworks (1).webp",
       value: "99%",
       label: "Uptime",
     },

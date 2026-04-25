@@ -56,7 +56,7 @@ export default function Navbar() {
 
           <Link to="/" className="flex items-center gap-2">
             <img
-              src="/images/logo.png"
+              src="/images/logo (1).webp"
               loading="lazy"
               alt="Vidayanta Logo"
               className="w-20 h-10"
