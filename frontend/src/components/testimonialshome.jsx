@@ -20,7 +20,7 @@ export default function Testimonials() {
       name: "Amit Saini",
       role: "Parent",
       review:
-        "A powerful and easy-to-use system that saves us hours of manual work.",
+        "Vidayanta is a powerful and easy-to-use system that saves us hours of manual work.",
     },
   ], []);
 
