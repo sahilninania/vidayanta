@@ -2,23 +2,52 @@ import { useEffect, useState, useMemo } from "react";
 
 export default function Analytics() {
 
-  // ✅ stable array (performance boost)
-  const images = useMemo(() => [
-    "/images/vidayanta (1).webp",
-    "/images/vidayanta (4).webp",
-    "/images/vidayanta (5).webp",
+  // ✅ Image + SEO Text mapping
+  const slides = useMemo(() => [
+    {
+      img: "/images/vidayanta (1).webp",
+      title: "Smart Analytics for School ERP",
+      desc: "Vidayanta school ERP system provides real-time student insights, attendance tracking and performance analytics for institutions.",
+      points: [
+        "✔ Student performance analytics",
+        "✔ Attendance tracking system",
+        "✔ School ERP dashboard insights",
+        "✔ Data-driven decision making"
+      ]
+    },
+    {
+      img: "/images/vidayanta (4).webp",
+      title: "Content Creation & Learning Module",
+      desc: "Create lessons, quizzes and digital content easily using Vidayanta ERP software for schools and teachers.",
+      points: [
+        "✔ Lesson planning tools",
+        "✔ Quiz & exam builder",
+        "✔ Media content library",
+        "✔ Digital classroom support"
+      ]
+    },
+    {
+      img: "/images/vidayanta (5).webp",
+      title: "Secure School Management System",
+      desc: "Vidayanta ERP ensures secure school management with role-based access, data protection and reliable system control.",
+      points: [
+        "✔ Role-based access control",
+        "✔ Secure student data",
+        "✔ Admin & teacher control",
+        "✔ Safe cloud-based ERP"
+      ]
+    }
   ], []);
 
   const [current, setCurrent] = useState(0);
 
-  // ✅ optimized slider
   useEffect(() => {
     const slider = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
+      setCurrent((prev) => (prev + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(slider);
-  }, [images.length]);
+  }, [slides.length]);
 
   return (
     <section className="py-20 bg-white">
@@ -28,9 +57,9 @@ export default function Analytics() {
         {/* IMAGE */}
         <div className="flex-1">
           <img
-            src={images[current]}
-            alt="Analytics Dashboard"
-            loading="lazy" // ✅ performance boost
+            src={slides[current].img}
+            alt={slides[current].title} // ✅ SEO IMPORTANT
+            loading="lazy"
             className="w-full rounded-xl shadow-lg transition duration-700"
           />
         </div>
@@ -38,21 +67,17 @@ export default function Analytics() {
         {/* TEXT */}
         <div className="flex-1">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Smart Analytics & Reports
+            {slides[current].title}
           </h2>
 
           <p className="text-gray-600 mb-6">
-            Get real-time insights about attendance,
-            student performance, and institutional
-            growth with powerful analytics tools.
+            {slides[current].desc}
           </p>
 
-          {/* LIST */}
           <ul className="space-y-3 text-gray-700">
-            <li>✔ Real-time attendance tracking</li>
-            <li>✔ Student performance reports</li>
-            <li>✔ Teacher activity monitoring</li>
-            <li>✔ Institution growth analytics</li>
+            {slides[current].points.map((p, i) => (
+              <li key={i}>{p}</li>
+            ))}
           </ul>
         </div>
 
