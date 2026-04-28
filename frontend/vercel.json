@@ -1,7 +1,7 @@
 {
-  "routes": [
-    { "src": "/sitemap.xml", "headers": { "Content-Type": "application/xml" }, "dest": "/sitemap.xml" },
-    { "src": "/robots.txt", "headers": { "Content-Type": "text/plain" }, "dest": "/robots.txt" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
