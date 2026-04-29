@@ -48,7 +48,7 @@ function CreateInstitution() {
       <div className='w-[75%] h-[92vh] bg-white rounded-2xl shadow-2xl flex overflow-hidden '>
         <div className='hidden lg:block w-[40%]'>
           <img 
-          src="/images/institutioncreation.jpeg"
+          src="/images/institutioncreation.webp"
           alt='institution'
           className='w-full h-full object-fill'/>
         </div>
