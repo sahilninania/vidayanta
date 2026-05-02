@@ -14,7 +14,7 @@ export default function Testimonials() {
       name: "Kushum Yadav",
       role: "Teacher",
       review:
-        "Managing attendance and students has become incredibly simple with Vidayanta.",
+        "Managing attendance and students has become incredibly simple with Vidayanta.Best school ERP software in India",
     },
     {
       name: "Amit Saini",
