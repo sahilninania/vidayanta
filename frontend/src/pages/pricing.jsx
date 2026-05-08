@@ -61,7 +61,7 @@ export default function Pricing() {
         <div className="max-w-xl mx-auto px-6">
           <div className="bg-white shadow-lg rounded-xl p-10 text-center">
             <h2 className="text-5xl font-bold text-teal-600">
-              ₹49
+              ₹11
             </h2>
 
             <p className="text-gray-700 mt-2">
