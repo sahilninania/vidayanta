@@ -44,7 +44,10 @@ export default function HowItWorks() {
   ], []);
 
   return (
-    <section id="howitworks" className="bg-gray-50 py-12 scroll-mt-24">
+    <section
+      id="howitworks"
+      className="bg-gray-50 py-12 scroll-mt-24"
+    >
 
       {/* TITLE */}
       <div className="text-center mb-14">
@@ -62,8 +65,9 @@ export default function HowItWorks() {
           <React.Fragment key={step.title}>
 
             {/* CARD */}
-            <div className="flex flex-col items-center text-center gap-4 p-6 rounded-xl w-56">
+            <div className="flex flex-col items-center text-center gap-4 p-6 rounded-xl w-72">
 
+              {/* IMAGE */}
               <div className="bg-[#14b8a6]/20 shadow-md rounded-full w-24 h-24 flex items-center justify-center">
                 <img
                   src={step.img}
@@ -73,12 +77,13 @@ export default function HowItWorks() {
                 />
               </div>
 
+              {/* CONTENT */}
               <div className="flex flex-col">
                 <h3 className="font-bold text-lg text-gray-800">
                   {step.title}
                 </h3>
 
-                <ul className="text-sm text-gray-600 mt-3 mb-3 space-y-1">
+                <ul className="text-sm text-gray-600 mt-3 mb-3 space-y-2 whitespace-nowrap">
                   {step.points.map((p) => (
                     <li key={p}>• {p}</li>
                   ))}
@@ -89,7 +94,7 @@ export default function HowItWorks() {
 
             {/* ARROW */}
             {index !== steps.length - 1 && (
-              <div className="text-teal-500 text-2xl hidden md:block">
+              <div className="text-teal-500 text-3xl hidden md:block">
                 <FaArrowRight />
               </div>
             )}
