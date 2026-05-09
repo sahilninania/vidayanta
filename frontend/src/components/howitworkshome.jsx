@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 
 export default function HowItWorks() {
 
-  // ✅ stable data (no re-create)
+  // ✅ stable data
   const steps = useMemo(() => [
     {
       img: "/images/howitsworks (1).webp",
@@ -18,27 +18,27 @@ export default function HowItWorks() {
       img: "/images/howitsworks (2).webp",
       title: "Institution",
       points: [
-        "Creates institutions",
-        "Manages platform settings",
-        "Controls the entire system",
+        "Adds teachers and classes",
+        "Tracks attendance and results",
+        "Communicates with parents",
       ],
     },
     {
       img: "/images/howitsworks (4).webp",
       title: "Teacher",
       points: [
-        "Creates institutions",
-        "Manages platform settings",
-        "Controls the entire system",
+        "Manages student attendance",
+        "Uploads homework and results",
+        "Interacts with students & parents",
       ],
     },
     {
       img: "/images/howitsworks (3).webp",
       title: "Student",
       points: [
-        "Creates institutions",
-        "Manages platform settings",
-        "Controls the entire system",
+        "Views homework and results",
+        "Tracks attendance records",
+        "Stays connected with teachers",
       ],
     },
   ], []);
@@ -80,7 +80,7 @@ export default function HowItWorks() {
 
                 <ul className="text-sm text-gray-600 mt-3 mb-3 space-y-1">
                   {step.points.map((p) => (
-                    <li key={p}>• {p}</li> // ✅ better key
+                    <li key={p}>• {p}</li>
                   ))}
                 </ul>
               </div>
