@@ -4,3 +4,32 @@ html, body {
   padding: 0;
   overflow-x: hidden;
 }
+.react-calendar {
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  padding: 20px;
+  font-family: inherit;
+}
+
+.react-calendar__tile {
+  border-radius: 10px;
+  padding: 12px;
+  transition: 0.3s;
+}
+
+.react-calendar__tile:hover {
+  background: #1fa2a6;
+  color: white;
+}
+
+.react-calendar__navigation button {
+  color: #1fa2a6;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.react-calendar__month-view__weekdays {
+  text-transform: uppercase;
+  font-weight: bold;
+}
