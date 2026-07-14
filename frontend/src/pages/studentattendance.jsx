@@ -444,9 +444,18 @@ export default function StudentAttendance() {
 
   const attendanceDates = {};
 
-  calendar.forEach((item) => {
-    attendanceDates[item.date] = item.status;
-  });
+ calendar.forEach((item) => {
+  const d = new Date(item.date);
+
+  const key =
+    d.getFullYear() +
+    "-" +
+    String(d.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(d.getDate()).padStart(2, "0");
+
+  attendanceDates[key] = item.status.toLowerCase();
+});
 
   return (
     <StudentLayout title="Attendance">
@@ -817,7 +826,12 @@ export default function StudentAttendance() {
             tileContent={({ date, view }) => {
               if (view !== "month") return null;
 
-              const key = date.toISOString().split("T")[0];
+              const key =
+  date.getFullYear() +
+  "-" +
+  String(date.getMonth() + 1).padStart(2, "0") +
+  "-" +
+  String(date.getDate()).padStart(2, "0");
               const status = attendanceDates[key];
 
               if (!status) return null;
