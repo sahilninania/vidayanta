@@ -814,19 +814,27 @@ export default function StudentAttendance() {
           </h2>
 
           <Calendar
-            tileClassName={({ date }) => {
+            tileContent={({ date, view }) => {
+              if (view !== "month") return null;
+
               const key = date.toISOString().split("T")[0];
+              const status = attendanceDates[key];
 
-               if(attendanceDates[key]=="present")
-                return "bg-green-500 text-white rounded-full";
+              if (!status) return null;
 
-                if(attendanceDates[key]=="absent")
-                return "bg-red-500 text-white rounded-full";
-
-                if(attendanceDates[key]=="leave")
-                return "bg-yellow-400 text-white rounded-full";
-
-              return "";
+              return (
+                <div className="flex justify-center mt-1">
+                  <div
+                    className={`w-2.5 h-2.5 rounded-full ${
+                      status === "present"
+                        ? "bg-green-500"
+                        : status === "absent"
+                        ? "bg-red-500"
+                        : "bg-yellow-400"
+                    }`}
+                  />
+                </div>
+              );
             }}
           />
 
