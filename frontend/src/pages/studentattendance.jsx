@@ -414,26 +414,36 @@ export default function StudentAttendance() {
     fetchAttendance();
   }, [studentId]);
 
-  const pieData = [
-    {
-      name: "Present",
-      value: summary.present || 0,
-    },
-    {
-      name: "Absent",
-      value: summary.absent || 0,
-    },
-  ];
+    const pieData=[
+  {
+  name:"Present",
+  value:summary.present||0
+  },
+  {
+  name:"Absent",
+  value:summary.absent||0
+  },
+  {
+  name:"Leave",
+  value:summary.leave||0
+  }
+  ];  
 
-  const COLORS = ["#10b981", "#ef4444"];
+      const COLORS=[
+    "#22c55e",
+    "#ef4444",
+    "#facc15"
+    ];
 
-  const lineData = Object.entries(monthlyTrend).map(
-    ([month, value]) => ({
+  const lineData=Object.keys(monthlyTrend).map(month=>({
+
       month,
-      Present: value.present,
-      Absent: value.absent,
-    })
-  );
+
+      Present:monthlyTrend[month].present,
+
+      Absent:monthlyTrend[month].absent
+
+      }));
 
   const attendanceDates = {};
 
@@ -507,6 +517,28 @@ export default function StudentAttendance() {
             <h2 className="text-4xl font-bold mt-2">
               {summary.present || 0}
             </h2>
+
+          </div>
+
+          <div className="bg-white rounded-2xl shadow p-6">
+
+          <div className="text-5xl">
+
+          🟡
+
+          </div>
+
+          <p className="text-gray-500 mt-4">
+
+          Leave
+
+          </p>
+
+          <h2 className="text-4xl font-bold text-yellow-500">
+
+          {summary.leave||0}
+
+          </h2>
 
           </div>
 
@@ -781,13 +813,14 @@ export default function StudentAttendance() {
             tileClassName={({ date }) => {
               const key = date.toISOString().split("T")[0];
 
-              if (attendanceDates[key] === "present") {
+               if(attendanceDates[key]=="present")
                 return "bg-green-500 text-white rounded-full";
-              }
 
-              if (attendanceDates[key] === "absent") {
+                if(attendanceDates[key]=="absent")
                 return "bg-red-500 text-white rounded-full";
-              }
+
+                if(attendanceDates[key]=="leave")
+                return "bg-yellow-400 text-white rounded-full";
 
               return "";
             }}
@@ -860,14 +893,18 @@ export default function StudentAttendance() {
 
                     <span
                       className={`px-4 py-2 rounded-full text-white font-semibold ${
-                        item.status === "present"
-                          ? "bg-green-500"
-                          : "bg-red-500"
+                        item.status=="present"
+                        ?"bg-green-500"
+                        :item.status=="leave"
+                        ?"bg-yellow-500"
+                        :"bg-red-500"
                       }`}
                     >
-                      {item.status === "present"
-                        ? "Present"
-                        : "Absent"}
+                      {item.status=="present"
+                      ?"Present"
+                      :item.status=="leave"
+                      ?"Leave"
+                      :"Absent"}
                     </span>
 
                   </div>

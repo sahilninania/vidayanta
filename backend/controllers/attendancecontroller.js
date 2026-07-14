@@ -115,80 +115,300 @@ export const getMyAttendance = async (req, res) => {
 
 
 
+// export const getStudentAttendance = async (req, res) => {
+//   try {
+//     const { studentId } = req.query;
+
+//     if (!studentId) {
+//       return res.status(400).json({
+//         message: "Student ID required"
+//       });
+//     }
+
+//     // ✅ STEP 1: student find
+//     const student = await Student.findById(studentId);
+
+//     if (!student) {
+//       return res.status(404).json({
+//         message: "Student not found"
+//       });
+//     }
+
+//     // ✅ STEP 2: class find
+//     const classData = await Class.findOne({
+//       className: student.className,
+//       section: student.section,
+//       institutionCode: student.institutionCode
+//     }).lean();
+
+//     let teacherName = "N/A";
+
+//     // ✅ STEP 3: teacher find
+//     if (classData?.classIncharge) {
+//       const teacher = await Teacher.findById(classData.classIncharge);
+//       teacherName = teacher?.teacherName || "N/A";
+//     }
+
+//     // ✅ STEP 4: attendance find (FIXED)
+//     const data = await Attendance.find({
+//       "records.studentId": studentId
+//     });
+
+//     let allRecords = [];
+
+//     data.forEach(doc => {
+//       const filtered = doc.records.filter(
+//         r => r.studentId.toString() === studentId
+//       );
+
+//       filtered.forEach(r => {
+//         allRecords.push({
+//           date: doc.date,
+//           status: r.status
+//         });
+//       });
+//     });
+
+//     // ✅ SUMMARY
+//     let total = allRecords.length;
+//     let present = allRecords.filter(r => r.status === "present").length;
+//     let absent = allRecords.filter(r => r.status === "absent").length;
+
+//     let percentage =
+//       total === 0 ? 0 : ((present / total) * 100).toFixed(2);
+
+//     // ✅ FINAL RESPONSE (🔥 IMPORTANT)
+//     res.json({
+//       className: student.className,
+//       teacherName,
+//       summary: { total, present, absent, percentage },
+//       records: allRecords
+//     });
+
+//   } catch (error) {
+//     // console.log(error);
+//     res.status(500).json({
+//       message: "Server error"
+//     });
+//   }
+// };
+
 export const getStudentAttendance = async (req, res) => {
   try {
     const { studentId } = req.query;
 
     if (!studentId) {
       return res.status(400).json({
-        message: "Student ID required"
+        message: "Student ID required",
       });
     }
 
-    // ✅ STEP 1: student find
+    // Student
     const student = await Student.findById(studentId);
 
     if (!student) {
       return res.status(404).json({
-        message: "Student not found"
+        message: "Student not found",
       });
     }
 
-    // ✅ STEP 2: class find
+    // Class
     const classData = await Class.findOne({
       className: student.className,
       section: student.section,
-      institutionCode: student.institutionCode
+      institutionCode: student.institutionCode,
     }).lean();
 
     let teacherName = "N/A";
 
-    // ✅ STEP 3: teacher find
     if (classData?.classIncharge) {
       const teacher = await Teacher.findById(classData.classIncharge);
+
       teacherName = teacher?.teacherName || "N/A";
     }
 
-    // ✅ STEP 4: attendance find (FIXED)
-    const data = await Attendance.find({
-      "records.studentId": studentId
-    });
+    // Attendance
+    const attendanceDocs = await Attendance.find({
+      "records.studentId": studentId,
+    })
+      .sort({ date: 1 })
+      .lean();
 
     let allRecords = [];
 
-    data.forEach(doc => {
-      const filtered = doc.records.filter(
-        r => r.studentId.toString() === studentId
-      );
-
-      filtered.forEach(r => {
-        allRecords.push({
-          date: doc.date,
-          status: r.status
-        });
+    attendanceDocs.forEach((doc) => {
+      doc.records.forEach((record) => {
+        if (record.studentId.toString() === studentId.toString()) {
+          allRecords.push({
+            date: doc.date,
+            status: record.status,
+          });
+        }
       });
     });
 
-    // ✅ SUMMARY
-    let total = allRecords.length;
-    let present = allRecords.filter(r => r.status === "present").length;
-    let absent = allRecords.filter(r => r.status === "absent").length;
+    // ------------------------
+    // SUMMARY
+    // ------------------------
 
-    let percentage =
-      total === 0 ? 0 : ((present / total) * 100).toFixed(2);
+    const total = allRecords.length;
 
-    // ✅ FINAL RESPONSE (🔥 IMPORTANT)
-    res.json({
-      className: student.className,
-      teacherName,
-      summary: { total, present, absent, percentage },
-      records: allRecords
+    const present = allRecords.filter(
+        r => r.status.toLowerCase()=="present"
+    ).length;
+
+    const absent = allRecords.filter(
+        r => r.status.toLowerCase()=="absent"
+    ).length;
+
+    const leave = allRecords.filter(
+        r => r.status.toLowerCase()=="leave"
+    ).length;
+
+    // Percentage ignores leave
+
+
+    const percentage =
+    total>0
+    ? Number(((present/total)*100).toFixed(1))
+    :0;
+
+    // ------------------------
+    // CURRENT STREAK
+    // ------------------------
+
+    let streak = 0;
+
+    for (let i = allRecords.length - 1; i >= 0; i--) {
+      if (allRecords[i].status === "present") {
+        streak++;
+      } else {
+        break;
+      }
+    }
+
+    // ------------------------
+    // MONTHLY TREND
+    // ------------------------
+
+    const monthlyTrend = {};
+
+    allRecords.forEach((record) => {
+      const month = new Date(record.date).toLocaleString("en-IN", {
+        month: "short",
+        year: "numeric",
+      });
+
+      if (!monthlyTrend[month]) {
+        monthlyTrend[month] = {
+          present: 0,
+          absent: 0,
+        };
+      }
+
+      if (record.status === "present") {
+        monthlyTrend[month].present++;
+      } else {
+        monthlyTrend[month].absent++;
+      }
     });
 
+    // ------------------------
+    // WEEKLY TREND
+    // ------------------------
+
+    const weeklyTrend = {};
+
+    allRecords.forEach((record) => {
+      const week = new Date(record.date).toLocaleDateString("en-IN", {
+        weekday: "short",
+      });
+
+      if (!weeklyTrend[week]) {
+        weeklyTrend[week] = 0;
+      }
+
+      if (record.status === "present") {
+        weeklyTrend[week]++;
+      }
+    });
+
+    // ------------------------
+    // CALENDAR
+    // ------------------------
+
+    const calendar = allRecords.map((item) => ({
+      date: item.date,
+      status: item.status,
+    }));
+
+    // ------------------------
+    // ACHIEVEMENT
+    // ------------------------
+
+    let achievement = null;
+
+    if (percentage === 100) {
+      achievement = {
+        title: "Perfect Attendance",
+        icon: "🏆",
+        color: "green",
+      };
+    } else if (percentage >= 90) {
+      achievement = {
+        title: "Excellent Attendance",
+        icon: "⭐",
+        color: "blue",
+      };
+    }
+
+    // ------------------------
+    // WARNING
+    // ------------------------
+
+    let warning = null;
+
+    if (percentage < 75) {
+      warning = {
+        title: "Attendance Below 75%",
+        message:
+          "Improve your attendance to meet school requirements.",
+      };
+    }
+
+    // ------------------------
+
+    return res.json({
+      success: true,
+
+      className: student.className,
+
+      teacherName,
+
+      summary: {
+        total,
+        present,
+        absent,
+        leave,
+        percentage,
+        streak,
+      },
+
+      calendar,
+
+      monthlyTrend,
+
+      weeklyTrend,
+
+      achievement,
+
+      warning,
+
+      records: allRecords,
+    });
   } catch (error) {
-    // console.log(error);
     res.status(500).json({
-      message: "Server error"
+      message: error.message,
     });
   }
 };
