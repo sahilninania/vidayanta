@@ -832,14 +832,6 @@ export default function StudentAttendance() {
 
           <div className="flex flex-wrap gap-6 mt-6">
 
-            <div className="flex items-center gap-2">
-
-              <div className="w-5 h-5 rounded bg-green-500"></div>
-
-              <span>Present</span>
-
-            </div><div className="flex flex-wrap gap-6 mt-6">
-
   <div className="flex items-center gap-2">
     <div className="w-5 h-5 rounded bg-green-500"></div>
     <span>Present</span>
@@ -856,16 +848,6 @@ export default function StudentAttendance() {
   </div>
 
 </div>
-
-            <div className="flex items-center gap-2">
-
-              <div className="w-5 h-5 rounded bg-red-500"></div>
-
-              <span>Absent</span>
-
-            </div>
-
-          </div>
 
         </div>
 
