@@ -299,17 +299,26 @@ export const getStudentAttendance = async (req, res) => {
         year: "numeric",
       });
 
-      if (!monthlyTrend[month]) {
+     if (!monthlyTrend[month]) {
         monthlyTrend[month] = {
           present: 0,
           absent: 0,
+          leave: 0,
         };
       }
 
-      if (record.status === "present") {
-        monthlyTrend[month].present++;
-      } else {
-        monthlyTrend[month].absent++;
+      switch (record.status.toLowerCase()) {
+        case "present":
+          monthlyTrend[month].present++;
+          break;
+
+        case "absent":
+          monthlyTrend[month].absent++;
+          break;
+
+        case "leave":
+          monthlyTrend[month].leave++;
+          break;
       }
     });
 

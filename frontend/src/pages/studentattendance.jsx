@@ -435,15 +435,12 @@ export default function StudentAttendance() {
     "#facc15"
     ];
 
-  const lineData=Object.keys(monthlyTrend).map(month=>({
-
-      month,
-
-      Present:monthlyTrend[month].present,
-
-      Absent:monthlyTrend[month].absent
-
-      }));
+ const lineData = Object.keys(monthlyTrend).map(month => ({
+  month,
+  Present: monthlyTrend[month].present,
+  Absent: monthlyTrend[month].absent,
+  Leave: monthlyTrend[month].leave,
+}));
 
   const attendanceDates = {};
 
@@ -792,6 +789,13 @@ export default function StudentAttendance() {
                   strokeWidth={3}
                 />
 
+                <Line
+                  type="monotone"
+                  dataKey="Leave"
+                  stroke="#facc15"
+                  strokeWidth={3}
+                />
+
               </LineChart>
 
             </ResponsiveContainer>
@@ -834,7 +838,24 @@ export default function StudentAttendance() {
 
               <span>Present</span>
 
-            </div>
+            </div><div className="flex flex-wrap gap-6 mt-6">
+
+  <div className="flex items-center gap-2">
+    <div className="w-5 h-5 rounded bg-green-500"></div>
+    <span>Present</span>
+  </div>
+
+  <div className="flex items-center gap-2">
+    <div className="w-5 h-5 rounded bg-red-500"></div>
+    <span>Absent</span>
+  </div>
+
+  <div className="flex items-center gap-2">
+    <div className="w-5 h-5 rounded bg-yellow-400"></div>
+    <span>Leave</span>
+  </div>
+
+</div>
 
             <div className="flex items-center gap-2">
 
