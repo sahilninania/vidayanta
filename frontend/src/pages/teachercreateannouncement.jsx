@@ -123,13 +123,24 @@ export default function TeacherCreateAnnouncement() {
 
       {/* Form Card */}
       <div className="bg-white rounded-3xl shadow-xl p-8 mt-8">
+        {/* ================= Form Heading ================= */}
+          <div className="mb-8">
 
+            <h2 className="text-2xl font-bold text-gray-800">
+              Announcement Details
+            </h2>
+
+            <p className="text-gray-500 mt-2">
+              Fill in the details below to send an announcement to your students.
+            </p>
+
+          </div>
         {/* TITLE */}
         <label className="block mb-1">Title</label>
         <input
           value={form.title}
           placeholder="Title"
-          className="border p-2 w-full mb-3 rounded"
+          className="w-full rounded-2xl border border-gray-300 px-4 py-3 mb-5 outline-none transition-all duration-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           onChange={(e) =>
             setForm(prev => ({ ...prev, title: e.target.value }))
           }
