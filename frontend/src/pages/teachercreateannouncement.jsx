@@ -92,11 +92,37 @@ export default function TeacherCreateAnnouncement() {
 
   return (
     <TeacherLayout>
-      <div className="p-6 m-6 max-w-xl mx-auto bg-white rounded-xl shadow">
+  <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-white p-6">
 
-        <h1 className="text-xl font-bold mb-4">
-          📢 Send Announcement
-        </h1>
+    <div className="max-w-4xl mx-auto">
+
+      {/* Header */}
+      <div className="rounded-3xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 p-8 text-white shadow-xl">
+
+        <div className="flex flex-col lg:flex-row justify-between items-center">
+
+          <div>
+
+            <h1 className="text-4xl font-bold">
+              📢 Create Announcement
+            </h1>
+
+            <p className="mt-3 text-cyan-100">
+              Notify students quickly and efficiently.
+            </p>
+
+          </div>
+
+          <div className="hidden md:flex text-7xl">
+            📣
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Form Card */}
+      <div className="bg-white rounded-3xl shadow-xl p-8 mt-8">
 
         {/* TITLE */}
         <label className="block mb-1">Title</label>
@@ -156,7 +182,11 @@ export default function TeacherCreateAnnouncement() {
           Send Announcement
         </button>
 
-      </div>
-    </TeacherLayout>
+           </div>
+
+    </div>
+
+  </div>
+</TeacherLayout>
   );
 }
