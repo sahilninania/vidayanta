@@ -128,26 +128,41 @@ useEffect(() => {
 
   }, [announcements, teacherId, navigate]);
 
-  return (
-    <TeacherLayout>
-      <div className="p-6">
+    return (
+  <TeacherLayout>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-white p-6">
 
-        {/* HEADER */}
-        <div className="flex justify-between mb-4">
-          <h1 className="text-2xl font-bold">Announcements</h1>
+      {/* Header */}
+      <div className="rounded-3xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 text-white p-8 shadow-xl">
+
+        <div className="flex flex-col lg:flex-row justify-between items-center">
+
+          <div>
+
+            <h1 className="text-4xl font-bold">
+              📢 Announcements
+            </h1>
+
+            <p className="mt-3 text-cyan-100">
+              Manage announcements for your students.
+            </p>
+
+          </div>
 
           <button
             onClick={() => navigate("/teacher/announcement/create")}
-            className="bg-[#14b8a6] text-white px-4 py-2 rounded"
+            className="mt-5 lg:mt-0 bg-white text-teal-600 px-6 py-3 rounded-2xl font-semibold shadow hover:scale-105 transition"
           >
-            + Create
+            + Create Announcement
           </button>
+
         </div>
 
-        {/* LIST */}
-        {renderedAnnouncements}
-
       </div>
-    </TeacherLayout>
+
+      {/* Cards will come here */}
+
+    </div>
+  </TeacherLayout>
   );
 }
