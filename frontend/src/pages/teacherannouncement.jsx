@@ -64,8 +64,24 @@ useEffect(() => {
   // ✅ RENDER LIST
   const renderedAnnouncements = useMemo(() => {
     if (announcements.length === 0) {
-      return <p>No announcements</p>;
-    }
+  return (
+    <div className="bg-white rounded-3xl shadow-lg p-16 text-center">
+
+      <div className="text-7xl">
+        📭
+      </div>
+
+      <h2 className="text-3xl font-bold mt-6">
+        No Announcements
+      </h2>
+
+      <p className="text-gray-500 mt-3">
+        Create your first announcement.
+      </p>
+
+    </div>
+  );
+}
 
     return announcements
   .filter((a) => {
@@ -125,37 +141,43 @@ useEffect(() => {
           <p className="text-sm mt-2 text-gray-600  whitespace-pre-line">
             {a.message}
           </p>
-          <div className="flex justify-between items-center mt-3">
-          {/* CLASS */}
-          <p className="text-xs text-gray-400 mt-2">
-            {a.className || ""} {a.section ? `- ${a.section}` : ""}
-          </p>
+          <div className="flex justify-between items-center mt-6 flex-wrap gap-4">
 
-          {/* ACTION BUTTONS */}
-          {isOwn && (
-            <div className="flex justify-end gap-2 ">
+  <div className="inline-flex items-center bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm font-semibold">
 
-              <button
-                onClick={() =>
-                  navigate(`/teacher/announcement/edit/${a._id}`, {
-                    state: a
-                  })
-                }
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
-              >
-                Edit
-              </button>
+    🎓 {a.className || "All Classes"}
 
-              <button
-                onClick={() => handleDelete(a._id)}
-                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-              >
-                Delete
-              </button>
+    {a.section && ` - ${a.section}`}
 
-            </div>
-          )}
-         </div>
+  </div>
+
+  {isOwn && (
+
+    <div className="flex gap-3">
+
+      <button
+        onClick={() =>
+          navigate(`/teacher/announcement/edit/${a._id}`, {
+            state: a,
+          })
+        }
+        className="px-5 py-2 rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition shadow"
+      >
+        ✏ Edit
+      </button>
+
+      <button
+        onClick={() => handleDelete(a._id)}
+        className="px-5 py-2 rounded-xl bg-red-500 text-white hover:bg-red-600 transition shadow"
+      >
+        🗑 Delete
+      </button>
+
+    </div>
+
+  )}
+
+</div>
         </div>
       );
     });
