@@ -136,7 +136,7 @@ export default function TeacherCreateAnnouncement() {
 
           </div>
         {/* TITLE */}
-        <label className="block mb-1">Title</label>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
         <input
           value={form.title}
           placeholder="Title"
@@ -149,13 +149,14 @@ export default function TeacherCreateAnnouncement() {
         {/* MESSAGE */}
         <label className="block mb-1">Message</label>
         <textarea
-          value={form.message}
-          placeholder="Message"
-          className="border p-2 w-full mb-3 rounded"
-          onChange={(e) =>
-            setForm(prev => ({ ...prev, message: e.target.value }))
-          }
-        />
+  rows={5}
+  value={form.message}
+  placeholder="Write your announcement..."
+  className="w-full rounded-2xl border border-gray-300 px-4 py-3 mb-5 outline-none transition-all duration-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+  onChange={(e) =>
+    setForm(prev => ({ ...prev, message: e.target.value }))
+  }
+/>
 
         {/* ================= Class & Section ================= */}
 
@@ -218,10 +219,49 @@ export default function TeacherCreateAnnouncement() {
 
 </div>
 
+{/* ================= Preview ================= */}
+
+<div className="mt-8">
+
+  <h3 className="text-xl font-bold text-gray-800 mb-4">
+    👀 Live Preview
+  </h3>
+
+  <div className="bg-gradient-to-r from-cyan-50 to-teal-50 rounded-3xl border border-cyan-100 p-6">
+
+    <div className="flex justify-between items-start">
+
+      <div>
+
+        <h2 className="text-xl font-bold text-gray-800">
+          {form.title || "Announcement Title"}
+        </h2>
+
+        <p className="text-sm text-gray-400 mt-1">
+          {form.className || "Class"}
+          {form.section && ` - ${form.section}`}
+        </p>
+
+      </div>
+
+      <div className="text-4xl">
+        📢
+      </div>
+
+    </div>
+
+    <p className="mt-5 text-gray-600 leading-7 whitespace-pre-line">
+      {form.message || "Your announcement preview will appear here."}
+    </p>
+
+  </div>
+
+</div>
+
         {/* BUTTON */}
         <button
           onClick={handleSubmit}
-          className="bg-[#14b8a6] text-white w-full p-2 rounded hover:bg-[#249487]"
+          className="mt-8 w-full rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
         >
           Send Announcement
         </button>
