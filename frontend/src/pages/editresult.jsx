@@ -104,72 +104,163 @@ export default function EditResult() {
 
 </div>
 
-        {results.map((r) => (
-          <div
-            key={r._id || r.studentId?._id}
-            className="flex justify-between items-center bg-white p-3 mb-2 rounded shadow"
-          >
-            <span>
-              {r.studentId?.rollNumber}. {r.studentId?.name}
-            </span>
+        {results.map((r, index) => (
 
-            <div className="flex items-center gap-2">
+  <div
+    key={r._id || r.studentId?._id}
+    className="bg-white rounded-3xl shadow-lg border border-gray-100 p-6 mb-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+  >
 
-              <input
-                type="number"
-                value={r.status === "absent" ? 0 : r.obtainedMarks}
-                disabled={r.status === "absent"}
-                onChange={(e) =>
-                  handleMarkChange(
-                    results.findIndex((x) => x === r),
-                    e.target.value
-                  )
-                }
-                className="border p-1 w-20 rounded"
-              />
+    <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-6">
 
-              <button
-                type="button"
-                onClick={() => handleStatusChange(
-                  results.findIndex((x) => x === r),
-                  "present"
-                )}
-                className={`px-2 py-1 rounded text-white ${
-                  r.status === "present"
-                    ? "bg-green-600"
-                    : "bg-green-400"
-                }`}
-              >
-                P
-              </button>
+      {/* Student */}
 
-              <button
-                type="button"
-                onClick={() => handleStatusChange(
-                  results.findIndex((x) => x === r),
-                  "absent"
-                )}
-                className={`px-2 py-1 rounded text-white ${
-                  r.status === "absent"
-                    ? "bg-red-600"
-                    : "bg-red-400"
-                }`}
-              >
-                A
-              </button>
+      <div className="flex items-center gap-4">
 
-            </div>
+        <div className="w-14 h-14 rounded-2xl bg-teal-100 flex items-center justify-center text-2xl">
+          👨‍🎓
+        </div>
 
-          </div>
-        ))}
+        <div>
+
+          <h2 className="text-xl font-bold text-gray-800">
+            {r.studentId?.name}
+          </h2>
+
+          <p className="text-gray-500">
+            Roll No. {r.studentId?.rollNumber}
+          </p>
+
+        </div>
+
+      </div>
+
+      {/* Marks + Status */}
+
+      <div className="flex flex-wrap items-center gap-3">
+
+        <input
+          type="number"
+          value={r.status === "absent" ? 0 : r.obtainedMarks}
+          disabled={r.status === "absent"}
+          onChange={(e) =>
+            handleMarkChange(index, e.target.value)
+          }
+          className="w-28 rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-gray-100"
+        />
+
+        {/* Present */}
 
         <button
-          type="submit"
-          className="bg-blue-600 text-white w-full p-2 mt-4 rounded"
+          type="button"
+          onClick={() => handleStatusChange(index, "present")}
+          className={`px-5 py-3 rounded-2xl font-semibold transition ${
+            r.status === "present"
+              ? "bg-green-600 text-white"
+              : "bg-green-100 text-green-700 hover:bg-green-200"
+          }`}
         >
-          Update Result
+          ✅ Present
         </button>
 
+        {/* Absent */}
+
+        <button
+          type="button"
+          onClick={() => handleStatusChange(index, "absent")}
+          className={`px-5 py-3 rounded-2xl font-semibold transition ${
+            r.status === "absent"
+              ? "bg-red-600 text-white"
+              : "bg-red-100 text-red-700 hover:bg-red-200"
+          }`}
+        >
+          ❌ Absent
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+))}
+
+       {/* ================= Summary ================= */}
+
+<div className="bg-white rounded-3xl shadow-lg p-6 mt-8">
+
+  <h2 className="text-xl font-bold text-gray-800 mb-5">
+    📊 Result Summary
+  </h2>
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+    {/* Total */}
+
+    <div className="rounded-2xl bg-blue-50 p-5">
+
+      <p className="text-sm text-gray-500">
+        Total Students
+      </p>
+
+      <h2 className="text-4xl font-bold text-blue-600 mt-2">
+        {results.length}
+      </h2>
+
+    </div>
+
+    {/* Present */}
+
+    <div className="rounded-2xl bg-green-50 p-5">
+
+      <p className="text-sm text-gray-500">
+        Present
+      </p>
+
+      <h2 className="text-4xl font-bold text-green-600 mt-2">
+        {results.filter(r => r.status === "present").length}
+      </h2>
+
+    </div>
+
+    {/* Absent */}
+
+    <div className="rounded-2xl bg-red-50 p-5">
+
+      <p className="text-sm text-gray-500">
+        Absent
+      </p>
+
+      <h2 className="text-4xl font-bold text-red-600 mt-2">
+        {results.filter(r => r.status === "absent").length}
+      </h2>
+
+    </div>
+
+  </div>
+
+</div>
+
+{/* ================= Buttons ================= */}
+
+<div className="flex flex-col md:flex-row gap-4 mt-8">
+
+  <button
+    type="button"
+    onClick={() => navigate(-1)}
+    className="flex-1 rounded-2xl border border-gray-300 py-4 text-lg font-semibold hover:bg-gray-100 transition"
+  >
+    ← Cancel
+  </button>
+
+  <button
+    type="submit"
+    className="flex-1 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+  >
+    💾 Update Result
+  </button>
+
+</div>
       </form>
 
     </TeacherLayout>
