@@ -152,7 +152,7 @@ export default function EditResult() {
     : "bg-green-100 text-green-700 hover:bg-green-200"
 }`}
         >
-          ✅ P
+           P
         </button>
 
         {/* Absent */}
@@ -166,7 +166,7 @@ export default function EditResult() {
     : "bg-red-100 text-red-700 hover:bg-red-200"
 }`}
         >
-          ❌ A
+           A
         </button>
 
       </div>
