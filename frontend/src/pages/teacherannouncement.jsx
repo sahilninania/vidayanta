@@ -81,21 +81,45 @@ useEffect(() => {
       const isOwn = a.createdBy?.toString() === teacherId;
 
       return (
-        <div
-          key={i}
-          className="border p-4 mb-3 rounded-lg shadow-sm"
-        >
+       <div
+  key={i}
+  className="bg-white rounded-3xl shadow-lg border border-gray-100 p-6 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+>
 
           {/* TOP */}
-          <div className="flex justify-between items-center">
-            <h2 className="font-bold text-[#14b8a6]">
-              {a.title}
-            </h2>
+          <div className="flex justify-between items-start">
 
-            <span className="text-xs bg-gray-200 px-2 py-1 rounded">
-              {isOwn ? "You" : "Institute"}
-            </span>
-          </div>
+  <div className="flex items-center gap-4">
+
+    <div className="w-14 h-14 rounded-2xl bg-teal-100 flex items-center justify-center text-2xl">
+      📢
+    </div>
+
+    <div>
+
+      <h2 className="text-xl font-bold text-gray-800">
+        {a.title}
+      </h2>
+
+      <p className="text-sm text-gray-400">
+        {new Date(a.createdAt).toLocaleDateString()}
+      </p>
+
+    </div>
+
+  </div>
+
+  <span
+    className={`px-4 py-2 rounded-full text-sm font-semibold ${
+      isOwn
+        ? "bg-green-100 text-green-700"
+        : "bg-blue-100 text-blue-700"
+    }`}
+  >
+    {isOwn ? "👤 You" : "🏫 Institute"}
+  </span>
+
+</div>
         
           {/* MESSAGE */}
           <p className="text-sm mt-2 text-gray-600  whitespace-pre-line">
@@ -136,7 +160,7 @@ useEffect(() => {
       );
     });
 
-  }, [announcements, teacherId, navigate]);
+  }, [announcements, teacherId, navigate, search]);
 
     return (
   <TeacherLayout>
@@ -285,7 +309,13 @@ useEffect(() => {
   </div>
 
 </div>
+{/* ================= Announcement List ================= */}
 
+<div className="mt-8 space-y-6">
+
+  {renderedAnnouncements}
+
+</div>
     </div>
   </TeacherLayout>
   );
