@@ -494,60 +494,144 @@ export default function StudentDashboard() {
 
   {/* RIGHT SIDE */}
 
-  <div>
+<div className="space-y-6">
 
-    <div className="bg-white rounded-3xl shadow-md p-6">
+  {/* Student Profile */}
 
-      <div className="flex flex-col items-center">
+  <div className="bg-white rounded-3xl shadow-md p-6">
 
-        <div className="h-28 w-28 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center text-white text-5xl">
+    <div className="flex flex-col items-center">
 
-          👨‍🎓
-
-        </div>
-
-        <h2 className="text-2xl font-bold mt-5">
-          {data?.student?.name}
-        </h2>
-
-        <p className="text-gray-500">
-          Student Profile
-        </p>
-
+      <div className="h-28 w-28 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 flex items-center justify-center text-white text-5xl">
+        👨‍🎓
       </div>
 
-      <div className="mt-8 space-y-4">
+      <h2 className="text-2xl font-bold mt-5">
+        {data?.student?.name}
+      </h2>
 
-        <ProfileItem
-          title="Class"
-          value={data?.student?.className}
-        />
+      <p className="text-gray-500">
+        Student Profile
+      </p>
 
-        <ProfileItem
-          title="Section"
-          value={data?.student?.section}
-        />
+    </div>
 
-        <ProfileItem
-          title="Attendance"
-          value={`${attendance}%`}
-        />
+    <div className="mt-8 space-y-4">
 
-        <ProfileItem
-          title="Homework"
-          value={data?.homework?.length}
-        />
+      <ProfileItem
+        title="Class"
+        value={data?.student?.className}
+      />
 
-        <ProfileItem
-          title="Announcements"
-          value={data?.announcements?.length}
-        />
+      <ProfileItem
+        title="Section"
+        value={data?.student?.section}
+      />
 
-      </div>
+      <ProfileItem
+        title="Attendance"
+        value={`${attendance}%`}
+      />
 
     </div>
 
   </div>
+
+  {/* Homework */}
+
+  <div className="bg-white rounded-3xl shadow-md overflow-hidden">
+
+    <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-4">
+
+      <h2 className="text-xl font-bold">
+        📚 Latest Homework
+      </h2>
+
+    </div>
+
+    <div className="p-5">
+
+      {(data?.homework || []).length > 0 ? (
+
+        data.homework.slice(0, 4).map((hw, index) => (
+
+          <div
+            key={index}
+            className="border-l-4 border-orange-500 bg-orange-50 rounded-xl p-4 mb-4"
+          >
+
+            <h3 className="font-semibold text-orange-700">
+              {hw.subject}
+            </h3>
+
+            <p className="text-gray-600 mt-2 whitespace-pre-line">
+              {hw.description}
+            </p>
+
+          </div>
+
+        ))
+
+      ) : (
+
+        <p className="text-center text-gray-500 py-6">
+          📭 No Homework
+        </p>
+
+      )}
+
+    </div>
+
+  </div>
+
+  {/* Announcements */}
+
+  <div className="bg-white rounded-3xl shadow-md overflow-hidden">
+
+    <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-4">
+
+      <h2 className="text-xl font-bold">
+        📢 Latest Announcements
+      </h2>
+
+    </div>
+
+    <div className="p-5">
+
+      {(data?.announcements || []).length > 0 ? (
+
+        data.announcements.slice(0, 3).map((item, index) => (
+
+          <div
+            key={index}
+            className="border-l-4 border-purple-500 bg-purple-50 rounded-xl p-4 mb-4"
+          >
+
+            <h3 className="font-semibold text-purple-700">
+              {item.title}
+            </h3>
+
+            <p className="text-gray-600 mt-2">
+              {item.message}
+            </p>
+
+          </div>
+
+        ))
+
+      ) : (
+
+        <p className="text-center text-gray-500 py-6">
+          📭 No Announcements
+        </p>
+
+      )}
+
+    </div>
+
+  </div>
+
+</div>
 
 </div>
 
