@@ -160,7 +160,100 @@ useEffect(() => {
 
       </div>
 
-      {/* Cards will come here */}
+      {/* ================= Statistics ================= */}
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+
+  {/* Total */}
+  <div className="bg-white rounded-3xl shadow-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all">
+
+    <div className="flex justify-between items-center">
+
+      <div>
+
+        <p className="text-gray-500 uppercase text-xs tracking-widest">
+          Total
+        </p>
+
+        <h2 className="text-4xl font-bold text-blue-600 mt-2">
+          {announcements.length}
+        </h2>
+
+      </div>
+
+      <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl">
+        📢
+      </div>
+
+    </div>
+
+  </div>
+
+  {/* Your Posts */}
+
+  <div className="bg-white rounded-3xl shadow-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all">
+
+    <div className="flex justify-between items-center">
+
+      <div>
+
+        <p className="text-gray-500 uppercase text-xs tracking-widest">
+          Your Posts
+        </p>
+
+        <h2 className="text-4xl font-bold text-green-600 mt-2">
+
+          {
+            announcements.filter(
+              (a) => a.createdBy?.toString() === teacherId
+            ).length
+          }
+
+        </h2>
+
+      </div>
+
+      <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center text-3xl">
+        👨‍🏫
+      </div>
+
+    </div>
+
+  </div>
+
+  {/* Institute */}
+
+  <div className="bg-white rounded-3xl shadow-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all">
+
+    <div className="flex justify-between items-center">
+
+      <div>
+
+        <p className="text-gray-500 uppercase text-xs tracking-widest">
+          Institute
+        </p>
+
+        <h2 className="text-4xl font-bold text-purple-600 mt-2">
+
+          {
+            announcements.filter(
+              (a) => a.createdBy?.toString() !== teacherId
+            ).length
+          }
+
+        </h2>
+
+      </div>
+
+      <div className="w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center text-3xl">
+        🏫
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
     </div>
   </TeacherLayout>
