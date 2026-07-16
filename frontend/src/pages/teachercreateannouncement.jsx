@@ -23,6 +23,7 @@ export default function TeacherCreateAnnouncement() {
   const fetchClasses = useCallback(async () => {
     try {
       const res = await axios.post(`${API_URL}/api/classes/teacher-classes`, { teacherId });
+      console.log("API Response:", res.data);
       setClasses(res.data.data || []);
     } catch (err) {
       console.log(err);

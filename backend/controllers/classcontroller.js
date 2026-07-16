@@ -198,8 +198,11 @@ export const getTeacherClasses = async (req, res) => {
 
     // ✅ find classes where teacher is assigned
     const classes = await Class.find({
-      "subjectTeachers.teacher": teacherId
-    }).lean();
+  $or: [
+    { classIncharge: teacherId },
+    { "subjectTeachers.teacher": teacherId }
+  ]
+}).lean();
 
     // ✅ filter subjects per class
     const result = classes.map((cls) => {
