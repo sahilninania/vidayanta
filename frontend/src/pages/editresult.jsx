@@ -63,16 +63,46 @@ export default function EditResult() {
 
       <form onSubmit={handleSubmit} className="p-4 md:p-6 bg-gray-100 min-h-screen">
 
-        <h2 className="text-2xl font-bold mb-6 text-[#1fa2a6]">
-          ✏️ Edit Result
-        </h2>
+        {/* ================= Header ================= */}
 
-        <input
-          type="number"
-          value={maxMarks}
-          onChange={(e) => setMaxMarks(Number(e.target.value))}
-          className="border p-2 mb-4 w-full rounded"
-        />
+<div className="rounded-3xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 text-white p-8 shadow-xl mb-8">
+
+  <div className="flex flex-col lg:flex-row justify-between items-center">
+
+    <div>
+
+      <h1 className="text-4xl font-bold">
+        ✏️ Edit Result
+      </h1>
+
+      <p className="mt-3 text-cyan-100">
+        Update student marks and attendance easily.
+      </p>
+
+    </div>
+
+    <div className="hidden md:block text-7xl">
+      📝
+    </div>
+
+  </div>
+
+</div>
+
+       <div className="bg-white rounded-3xl shadow-lg p-6 mb-8">
+
+  <label className="block text-sm font-semibold text-gray-700 mb-3">
+    🎯 Maximum Marks
+  </label>
+
+  <input
+    type="number"
+    value={maxMarks}
+    onChange={(e) => setMaxMarks(Number(e.target.value))}
+    className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
+  />
+
+</div>
 
         {results.map((r) => (
           <div
