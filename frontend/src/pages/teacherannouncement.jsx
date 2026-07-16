@@ -7,6 +7,7 @@ import API_URL from "../config/api.js";
 export default function TeacherAnnouncement() {
 
   const [announcements, setAnnouncements] = useState([]);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   // ✅ localStorage
@@ -66,7 +67,16 @@ useEffect(() => {
       return <p>No announcements</p>;
     }
 
-    return announcements.map((a, i) => {
+    return announcements
+  .filter((a) => {
+    const keyword = search.toLowerCase();
+
+    return (
+      a.title?.toLowerCase().includes(keyword) ||
+      a.message?.toLowerCase().includes(keyword)
+    );
+  })
+  .map((a, i) => {
 
       const isOwn = a.createdBy?.toString() === teacherId;
 
@@ -250,6 +260,27 @@ useEffect(() => {
       </div>
 
     </div>
+
+  </div>
+
+</div>
+{/* ================= Search ================= */}
+
+<div className="bg-white rounded-3xl shadow-lg p-5 mt-8">
+
+  <div className="flex items-center gap-3">
+
+    <div className="text-2xl">
+      🔍
+    </div>
+
+    <input
+      type="text"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search announcements..."
+      className="w-full outline-none text-lg"
+    />
 
   </div>
 
