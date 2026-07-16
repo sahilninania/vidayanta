@@ -651,34 +651,49 @@ function StatsCard({
 }) {
   return (
     <div
-      className={`${color} rounded-3xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-white`}
+      className={`${color} rounded-3xl p-6 border border-gray-100 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 cursor-pointer`}
     >
-      <div className="text-5xl">
-        {icon}
+      <div className="flex justify-between items-start">
+
+        <div>
+
+          <p className="uppercase tracking-widest text-xs text-gray-500">
+            {title}
+          </p>
+
+          <h2 className={`text-4xl font-bold mt-3 ${text}`}>
+            {value}
+          </h2>
+
+        </div>
+
+        <div className="w-16 h-16 rounded-2xl bg-white shadow flex items-center justify-center text-3xl">
+          {icon}
+        </div>
+
       </div>
-
-      <p className="uppercase text-xs tracking-widest text-gray-500 mt-5">
-        {title}
-      </p>
-
-      <h2 className={`text-4xl font-bold mt-2 ${text}`}>
-        {value}
-      </h2>
     </div>
   );
 }
 
 /* ================= Skeleton ================= */
-
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-3xl p-6 shadow animate-pulse">
+    <div className="bg-white rounded-3xl p-6 shadow-lg animate-pulse">
 
-      <div className="w-16 h-16 rounded-full bg-gray-300"></div>
+      <div className="flex justify-between">
 
-      <div className="h-4 w-24 bg-gray-300 rounded mt-6"></div>
+        <div>
 
-      <div className="h-8 w-20 bg-gray-300 rounded mt-3"></div>
+          <div className="w-20 h-3 bg-gray-300 rounded"></div>
+
+          <div className="w-24 h-8 bg-gray-300 rounded mt-4"></div>
+
+        </div>
+
+        <div className="w-16 h-16 rounded-2xl bg-gray-300"></div>
+
+      </div>
 
     </div>
   );
