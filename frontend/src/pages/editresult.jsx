@@ -115,29 +115,21 @@ export default function EditResult() {
 
       {/* Student */}
 
-      <div className="flex items-center gap-4">
+      <div className="flex-1">
 
-        <div className="w-14 h-14 rounded-2xl bg-teal-100 flex items-center justify-center text-2xl">
-          👨‍🎓
-        </div>
+  <h2 className="text-lg font-bold text-gray-800">
+    {r.studentId?.name}
+  </h2>
 
-        <div>
+  <p className="text-sm text-gray-500">
+    Roll No. {r.studentId?.rollNumber}
+  </p>
 
-          <h2 className="text-xl font-bold text-gray-800">
-            {r.studentId?.name}
-          </h2>
-
-          <p className="text-gray-500">
-            Roll No. {r.studentId?.rollNumber}
-          </p>
-
-        </div>
-
-      </div>
+</div>
 
       {/* Marks + Status */}
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex items-center gap-2 flex-nowrap">
 
         <input
           type="number"
@@ -146,7 +138,7 @@ export default function EditResult() {
           onChange={(e) =>
             handleMarkChange(index, e.target.value)
           }
-          className="w-28 rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-gray-100"
+          className="w-16 md:w-20 rounded-xl border border-gray-300 px-2 py-2 text-center outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-gray-100"
         />
 
         {/* Present */}
@@ -154,13 +146,13 @@ export default function EditResult() {
         <button
           type="button"
           onClick={() => handleStatusChange(index, "present")}
-          className={`px-5 py-3 rounded-2xl font-semibold transition ${
-            r.status === "present"
-              ? "bg-green-600 text-white"
-              : "bg-green-100 text-green-700 hover:bg-green-200"
-          }`}
+          className={`w-10 h-10 rounded-xl font-bold transition ${
+  r.status === "present"
+    ? "bg-green-600 text-white"
+    : "bg-green-100 text-green-700 hover:bg-green-200"
+}`}
         >
-          ✅ Present
+          ✅ P
         </button>
 
         {/* Absent */}
@@ -168,13 +160,13 @@ export default function EditResult() {
         <button
           type="button"
           onClick={() => handleStatusChange(index, "absent")}
-          className={`px-5 py-3 rounded-2xl font-semibold transition ${
-            r.status === "absent"
-              ? "bg-red-600 text-white"
-              : "bg-red-100 text-red-700 hover:bg-red-200"
-          }`}
+          className={`w-10 h-10 rounded-xl font-bold transition ${
+  r.status === "absent"
+    ? "bg-red-600 text-white"
+    : "bg-red-100 text-red-700 hover:bg-red-200"
+}`}
         >
-          ❌ Absent
+          ❌ A
         </button>
 
       </div>
