@@ -157,33 +157,66 @@ export default function TeacherCreateAnnouncement() {
           }
         />
 
-        {/* CLASS */}
-        <label className="block mb-1">Class</label>
-        <select
-          value={form.className}
-          className="border p-2 w-full mb-3 rounded"
-          onChange={(e) => handleClassChange(e.target.value)}
-        >
-          <option value="">Select Class</option>
-          {uniqueClasses.map((cls, i) => (
-            <option key={i}>{cls}</option>
-          ))}
-        </select>
+        {/* ================= Class & Section ================= */}
 
-        {/* SECTION */}
-        <label className="block mb-1">Section</label>
-        <select
-          value={form.section}
-          className="border p-2 w-full mb-3 rounded"
-          onChange={(e) =>
-            setForm(prev => ({ ...prev, section: e.target.value }))
-          }
-        >
-          <option value="">Select Section</option>
-          {sections.map((sec, i) => (
-            <option key={i}>{sec}</option>
-          ))}
-        </select>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+  {/* Class */}
+
+  <div>
+
+    <label className="block text-sm font-semibold text-gray-700 mb-2">
+      🎓 Class
+    </label>
+
+    <select
+      value={form.className}
+      className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none transition-all duration-300 focus:ring-2 focus:ring-teal-500"
+      onChange={(e) => handleClassChange(e.target.value)}
+    >
+      <option value="">Select Class</option>
+
+      {uniqueClasses.map((cls, i) => (
+        <option key={i}>
+          {cls}
+        </option>
+      ))}
+
+    </select>
+
+  </div>
+
+  {/* Section */}
+
+  <div>
+
+    <label className="block text-sm font-semibold text-gray-700 mb-2">
+      📚 Section
+    </label>
+
+    <select
+      value={form.section}
+      className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none transition-all duration-300 focus:ring-2 focus:ring-teal-500"
+      onChange={(e) =>
+        setForm((prev) => ({
+          ...prev,
+          section: e.target.value,
+        }))
+      }
+    >
+      <option value="">Select Section</option>
+
+      {sections.map((sec, i) => (
+        <option key={i}>
+          {sec}
+        </option>
+      ))}
+
+    </select>
+
+  </div>
+
+</div>
 
         {/* BUTTON */}
         <button
