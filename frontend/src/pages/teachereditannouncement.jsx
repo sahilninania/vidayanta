@@ -51,50 +51,194 @@ export default function TeacherEditAnnouncement() {
       alert("Update failed ❌");
     }
   };
+return (
+  <TeacherLayout>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-white p-6">
 
-  return (
-    <TeacherLayout title="Edit Announcement">
+      <div className="max-w-4xl mx-auto">
 
-      <div className="p-6 max-w-md mx-auto bg-white rounded-xl m-6 shadow">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#1fa2a6] mb-1 text-center md:text-left">
-              Vidayanta
+        {/* Header */}
+        <div className="rounded-3xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 p-8 text-white shadow-xl">
+
+          <div className="flex justify-between items-center">
+
+            <div>
+              <h1 className="text-4xl font-bold">
+                ✏️ Edit Announcement
+              </h1>
+
+              <p className="mt-2 text-cyan-100">
+                Update your announcement before sending it to students.
+              </p>
+            </div>
+
+            <div className="hidden md:block text-7xl">
+              📢
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Card */}
+
+        <div className="bg-white rounded-3xl shadow-xl p-8 mt-8">
+
+          <div className="mb-8">
+
+            <h2 className="text-2xl font-bold text-gray-800">
+              Announcement Details
             </h2>
-        <h1 className="text-xl font-bold mb-4 text-[#14b8a6]">
-          Edit Announcement
-        </h1>
 
-        <form onSubmit={handleUpdate}>
-          <label className="block mb-1">Title</label>
-          {/* TITLE */}
-          <input
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            placeholder="Title"
-            className="w-full border p-2 mb-3 rounded"
-          />
+            <p className="text-gray-500 mt-2">
+              Modify the announcement information below.
+            </p>
 
-          {/* MESSAGE */}
-          <label className="block mb-1">Message</label>
-          <textarea
-            name="message"
-            value={form.message}
-            onChange={handleChange}
-            placeholder="Message"
-            className="w-full border p-2 mb-3 rounded"
-          />
+          </div>
 
-          <button
-            type="submit"
-            className="w-full bg-[#14b8a6] text-white py-2 rounded"
-          >
-            Update Announcement
-          </button>
+          <form onSubmit={handleUpdate}>
 
-        </form>
+            {/* Title */}
+
+            <div className="mb-6">
+
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                📝 Title
+              </label>
+
+              <input
+                name="title"
+                value={form.title}
+                onChange={handleChange}
+                placeholder="Announcement Title"
+                className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none transition-all duration-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              />
+
+            </div>
+
+            {/* Message */}
+
+            <div className="mb-6">
+
+              <div className="flex justify-between mb-2">
+
+                <label className="text-sm font-semibold text-gray-700">
+                  📄 Message
+                </label>
+
+                <span className="text-xs text-gray-400">
+                  {form.message.length} characters
+                </span>
+
+              </div>
+
+              <textarea
+                rows={6}
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                placeholder="Write announcement..."
+                className="w-full rounded-2xl border border-gray-300 px-4 py-3 resize-none outline-none transition-all duration-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              />
+
+            </div>
+
+            {/* Read Only Info */}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+
+              <div className="rounded-2xl bg-cyan-50 border border-cyan-100 p-4">
+
+                <p className="text-sm text-gray-500">
+                  🎓 Class
+                </p>
+
+                <h3 className="text-xl font-bold text-gray-800 mt-1">
+                  {form.className}
+                </h3>
+
+              </div>
+
+              <div className="rounded-2xl bg-teal-50 border border-teal-100 p-4">
+
+                <p className="text-sm text-gray-500">
+                  📚 Section
+                </p>
+
+                <h3 className="text-xl font-bold text-gray-800 mt-1">
+                  {form.section}
+                </h3>
+
+              </div>
+
+            </div>
+
+            {/* Preview */}
+
+            <div className="mb-8">
+
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
+                👀 Live Preview
+              </h3>
+
+              <div className="rounded-3xl border border-cyan-100 bg-gradient-to-r from-cyan-50 to-teal-50 p-6">
+
+                <div className="flex justify-between">
+
+                  <div>
+
+                    <h2 className="text-xl font-bold text-gray-800">
+                      {form.title || "Announcement Title"}
+                    </h2>
+
+                    <p className="text-sm text-gray-400 mt-1">
+                      {form.className} - {form.section}
+                    </p>
+
+                  </div>
+
+                  <div className="text-4xl">
+                    📣
+                  </div>
+
+                </div>
+
+                <p className="mt-5 text-gray-600 whitespace-pre-line leading-7">
+                  {form.message || "Announcement preview will appear here."}
+                </p>
+
+              </div>
+
+            </div>
+
+            {/* Buttons */}
+
+            <div className="flex flex-col md:flex-row gap-4">
+
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="flex-1 rounded-2xl border border-gray-300 py-4 font-semibold hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="flex-1 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+              >
+                ✅ Update Announcement
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
 
       </div>
 
-    </TeacherLayout>
-  );
+    </div>
+  </TeacherLayout>
+);
 }
